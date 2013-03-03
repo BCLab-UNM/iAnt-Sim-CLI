@@ -1,0 +1,3 @@
+[submodule "AntBot-GA"]
+	path = AntBot-GA
+	url = git@github.com:tie372/AntBot-GA.git
