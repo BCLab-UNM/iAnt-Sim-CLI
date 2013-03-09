@@ -7,34 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		42AB325E16E3E8A800A29A3E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AB325D16E3E8A800A29A3E /* main.cpp */; };
-		42AB326016E3E8A800A29A3E /* AntBot_GA_CLI.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 42AB325F16E3E8A800A29A3E /* AntBot_GA_CLI.1 */; };
+		422EED3716E99CC800F3884A /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 422EED3616E99CC800F3884A /* Utilities.m */; };
+		42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB327516E3F56E00A29A3E /* Foundation.framework */; };
+		42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */; };
+		42AB327916E3F56E00A29A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB327816E3F56E00A29A3E /* main.m */; };
+		42AB327D16E3F56E00A29A3E /* AntBot_GA_CLI.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		42AB326A16E3F2ED00A29A3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 40ED65B616DABD31006F8494;
+			remoteInfo = "AntBot-GA";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		42AB325816E3E8A800A29A3E /* CopyFiles */ = {
+		42AB327116E3F56E00A29A3E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				42AB326016E3E8A800A29A3E /* AntBot_GA_CLI.1 in CopyFiles */,
+				42AB327D16E3F56E00A29A3E /* AntBot_GA_CLI.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		42AB325A16E3E8A800A29A3E /* AntBot-GA-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AntBot-GA-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
-		42AB325D16E3E8A800A29A3E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		42AB325F16E3E8A800A29A3E /* AntBot_GA_CLI.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AntBot_GA_CLI.1; sourceTree = "<group>"; };
+		422EED3516E99CC800F3884A /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		422EED3616E99CC800F3884A /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "AntBot-GA.xcodeproj"; path = "AntBot-GA/AntBot-GA.xcodeproj"; sourceTree = "<group>"; };
+		42AB327316E3F56E00A29A3E /* AntBot-GA-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AntBot-GA-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42AB327516E3F56E00A29A3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		42AB327816E3F56E00A29A3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		42AB327B16E3F56E00A29A3E /* AntBot-GA-CLI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AntBot-GA-CLI-Prefix.pch"; sourceTree = "<group>"; };
+		42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AntBot_GA_CLI.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		42AB325716E3E8A800A29A3E /* Frameworks */ = {
+		42AB327016E3F56E00A29A3E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */,
+				42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,7 +64,9 @@
 		42AB325116E3E8A800A29A3E = {
 			isa = PBXGroup;
 			children = (
-				42AB325C16E3E8A800A29A3E /* AntBot-GA-CLI */,
+				42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */,
+				42AB327716E3F56E00A29A3E /* AntBot-GA-CLI */,
+				42AB327416E3F56E00A29A3E /* Frameworks */,
 				42AB325B16E3E8A800A29A3E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,30 +74,57 @@
 		42AB325B16E3E8A800A29A3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42AB325A16E3E8A800A29A3E /* AntBot-GA-CLI */,
+				42AB327316E3F56E00A29A3E /* AntBot-GA-CLI */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		42AB325C16E3E8A800A29A3E /* AntBot-GA-CLI */ = {
+		42AB326716E3F2EC00A29A3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42AB325D16E3E8A800A29A3E /* main.cpp */,
-				42AB325F16E3E8A800A29A3E /* AntBot_GA_CLI.1 */,
+				42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42AB327416E3F56E00A29A3E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				42AB327516E3F56E00A29A3E /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		42AB327716E3F56E00A29A3E /* AntBot-GA-CLI */ = {
+			isa = PBXGroup;
+			children = (
+				42AB327816E3F56E00A29A3E /* main.m */,
+				422EED3516E99CC800F3884A /* Utilities.h */,
+				422EED3616E99CC800F3884A /* Utilities.m */,
+				42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */,
+				42AB327A16E3F56E00A29A3E /* Supporting Files */,
 			);
 			path = "AntBot-GA-CLI";
+			sourceTree = "<group>";
+		};
+		42AB327A16E3F56E00A29A3E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				42AB327B16E3F56E00A29A3E /* AntBot-GA-CLI-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		42AB325916E3E8A800A29A3E /* AntBot-GA-CLI */ = {
+		42AB327216E3F56E00A29A3E /* AntBot-GA-CLI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 42AB326316E3E8A800A29A3E /* Build configuration list for PBXNativeTarget "AntBot-GA-CLI" */;
+			buildConfigurationList = 42AB327E16E3F56E00A29A3E /* Build configuration list for PBXNativeTarget "AntBot-GA-CLI" */;
 			buildPhases = (
-				42AB325616E3E8A800A29A3E /* Sources */,
-				42AB325716E3E8A800A29A3E /* Frameworks */,
-				42AB325816E3E8A800A29A3E /* CopyFiles */,
+				42AB326F16E3F56E00A29A3E /* Sources */,
+				42AB327016E3F56E00A29A3E /* Frameworks */,
+				42AB327116E3F56E00A29A3E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -83,7 +132,7 @@
 			);
 			name = "AntBot-GA-CLI";
 			productName = "AntBot-GA-CLI";
-			productReference = 42AB325A16E3E8A800A29A3E /* AntBot-GA-CLI */;
+			productReference = 42AB327316E3F56E00A29A3E /* AntBot-GA-CLI */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -105,19 +154,36 @@
 			mainGroup = 42AB325116E3E8A800A29A3E;
 			productRefGroup = 42AB325B16E3E8A800A29A3E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 42AB326716E3F2EC00A29A3E /* Products */;
+					ProjectRef = 42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				42AB325916E3E8A800A29A3E /* AntBot-GA-CLI */,
+				42AB327216E3F56E00A29A3E /* AntBot-GA-CLI */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libAntBot-GA.a";
+			remoteRef = 42AB326A16E3F2ED00A29A3E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXSourcesBuildPhase section */
-		42AB325616E3E8A800A29A3E /* Sources */ = {
+		42AB326F16E3F56E00A29A3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AB325E16E3E8A800A29A3E /* main.cpp in Sources */,
+				42AB327916E3F56E00A29A3E /* main.m in Sources */,
+				422EED3716E99CC800F3884A /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +220,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -180,20 +247,46 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
-		42AB326416E3E8A800A29A3E /* Debug */ = {
+		42AB327F16E3F56E00A29A3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AntBot-GA-CLI/AntBot-GA-CLI-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-GA\"";
 			};
 			name = Debug;
 		};
-		42AB326516E3E8A800A29A3E /* Release */ = {
+		42AB328016E3F56E00A29A3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AntBot-GA-CLI/AntBot-GA-CLI-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-GA\"";
 			};
 			name = Release;
 		};
@@ -209,13 +302,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		42AB326316E3E8A800A29A3E /* Build configuration list for PBXNativeTarget "AntBot-GA-CLI" */ = {
+		42AB327E16E3F56E00A29A3E /* Build configuration list for PBXNativeTarget "AntBot-GA-CLI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				42AB326416E3E8A800A29A3E /* Debug */,
-				42AB326516E3E8A800A29A3E /* Release */,
+				42AB327F16E3F56E00A29A3E /* Debug */,
+				42AB328016E3F56E00A29A3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
