@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     //Settings
     [simulation setAntCount:6];
     [simulation setColonyCount:100];
-    [simulation setGenerationCount:100];
+    [simulation setGenerationCount:200];
     [simulation setTagCount:256];
     [simulation setDistributionClustered:0];
     [simulation setDistributionPowerlaw:1];
@@ -51,9 +51,13 @@ int main(int argc, const char * argv[]) {
         //Run sim
         [simulation start];
         
-        //Write parameters to file using comma-delimited format
-        NSMutableDictionary *evolvedParameters = [[simulation averageColony] getParameters];
-        [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%d\n",
+        Colony *colony = [[Colony alloc] init];
+        NSMutableDictionary *evolvedParameters = [[NSMutableDictionary alloc] init];
+        
+        //Write averaged parameters to file using comma-delimited format
+        colony = [simulation averageColony];
+        evolvedParameters = [colony getParameters];
+        [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                                [evolvedParameters objectForKey:@"decayRate"],
                                [evolvedParameters objectForKey:@"walkDropRate"],
                                [evolvedParameters objectForKey:@"searchGiveupRate"],
@@ -67,9 +71,8 @@ int main(int argc, const char * argv[]) {
                                [evolvedParameters objectForKey:@"densityPatchConstant"],
                                [evolvedParameters objectForKey:@"densityInfluenceThreshold"],
                                [evolvedParameters objectForKey:@"densityInfluenceConstant"],
-                               [simulation averageColony].tagsCollected]
+                               colony.tagsCollected]
                        toFile:[FILE_PATH stringByExpandingTildeInPath]];
-        
     }
     
     return 0;
