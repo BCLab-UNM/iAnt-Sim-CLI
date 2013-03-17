@@ -20,11 +20,18 @@ int main(int argc, const char * argv[]) {
     
     [simulation setAntCount:6];
     [simulation setColonyCount:100];
-    [simulation setGenerationCount:200];
+    [simulation setGenerationCount:100];
     [simulation setTagCount:256];
     [simulation setDistributionClustered:0];
     [simulation setDistributionPowerlaw:1];
     [simulation setDistributionRandom:0];
+    
+    if (argc == 2){
+        float std = atof(argv[1]);
+        [simulation setPerturbStd:std];
+    }
+    
+    [controller start];
     
     for (int i=0; i<NUM_ITERATIONS; i++) {
         //Run sim
