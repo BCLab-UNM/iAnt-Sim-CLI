@@ -10,9 +10,12 @@
 #import <AntBot-GA/GA.h>
 #import "Utilities.h"
 
-@interface Controller : NSObject {}
+@interface Controller : NSObject {
+    NSString* logFilePath;
+}
 
 -(id) initWithLogFile:(NSString*)_logFilePath;
+-(void) start;
 
 @property (nonatomic) Simulation* simulation;
 @property (nonatomic) NSString* logBestParameters;

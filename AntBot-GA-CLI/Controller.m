@@ -14,38 +14,40 @@
 
 - (id) initWithLogFile:(NSString*)_logFilePath {
     if (self == [super init]) {
+        logFilePath = [_logFilePath stringByExpandingTildeInPath];
         simulation = [[Simulation alloc] init];
         [simulation setDelegate:self];
-        
-        _logFilePath = [_logFilePath stringByExpandingTildeInPath];
-        logBestParameters = [NSString stringWithFormat:@"%@/bestParameters.csv", _logFilePath];
-        logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters.csv", _logFilePath];
-        
-        //Initialize log file with appropriate column headings
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
-                             @"decayRate",
-                             @"walkDropRate",
-                             @"searchGiveupRate",
-                             @"trailDropRate",
-                             @"dirDevConst",
-                             @"dirDevCoeff",
-                             @"dirTimePow",
-                             @"densityThreshold",
-                             @"densityConstant",
-                             @"densityPatchThreshold",
-                             @"densityPatchConstant",
-                             @"densityInfluenceThreshold",
-                             @"densityInfluenceConstant",
-                             @"tagsCollected"];
-        
-        [fileManager removeItemAtPath:logBestParameters error:NULL];
-        [fileManager removeItemAtPath:logMeanParameters error:NULL];
-        
-        [Utilities appendText:headers toFile:logBestParameters];
-        [Utilities appendText:headers toFile:logMeanParameters];
     }
     return self;
+}
+
+-(void)start {
+    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_perturbStd=%3.2f.csv", logFilePath,[simulation perturbStd]];
+    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_perturbStd=%3.2f.csv", logFilePath,[simulation perturbStd]];
+    
+    //Initialize log file with appropriate column headings
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
+                         @"decayRate",
+                         @"walkDropRate",
+                         @"searchGiveupRate",
+                         @"trailDropRate",
+                         @"dirDevConst",
+                         @"dirDevCoeff",
+                         @"dirTimePow",
+                         @"densityThreshold",
+                         @"densityConstant",
+                         @"densityPatchThreshold",
+                         @"densityPatchConstant",
+                         @"densityInfluenceThreshold",
+                         @"densityInfluenceConstant",
+                         @"tagsCollected"];
+    
+    [fileManager removeItemAtPath:logBestParameters error:NULL];
+    [fileManager removeItemAtPath:logMeanParameters error:NULL];
+    
+    [Utilities appendText:headers toFile:logBestParameters];
+    [Utilities appendText:headers toFile:logMeanParameters];
 }
 
 -(void) finishedGeneration:(int)generation {
@@ -91,6 +93,12 @@
                            [evolvedParameters objectForKey:@"densityInfluenceConstant"],
                            colony.tagsCollected]
                    toFile:logMeanParameters];
+    
+    //If run has completed, add new line to each log file
+    if (generation == [simulation generationCount] - 1) {
+        [Utilities appendText:@"\n" toFile:logBestParameters];
+        [Utilities appendText:@"\n" toFile:logMeanParameters];
+    }
 }
 
 @end
