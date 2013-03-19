@@ -27,20 +27,16 @@
     
     //Initialize log file with appropriate column headings
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
-                         @"decayRate",
-                         @"walkDropRate",
-                         @"searchGiveupRate",
-                         @"trailDropRate",
-                         @"dirDevConst",
-                         @"dirDevCoeff",
-                         @"dirTimePow",
-                         @"densityThreshold",
-                         @"densityConstant",
-                         @"densityPatchThreshold",
-                         @"densityPatchConstant",
-                         @"densityInfluenceThreshold",
-                         @"densityInfluenceConstant",
+    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
+                         @"pheromoneDecayRate",
+                         @"travelGiveUpProbability",
+                         @"searchGiveUpProbability",
+                         @"pheromoneGiveUpProbability",
+                         @"uninformedSearchCorrelation",
+                         @"informedSearchCorrelationDecayRate",
+                         @"pheromoneLayingRate",
+                         @"siteFidelityRate",
+                         @"pheromoneFollowingRate",
                          @"tagsCollected"];
     
     [fileManager removeItemAtPath:logBestParameters error:NULL];
@@ -57,40 +53,32 @@
     //Write best parameters to file using comma-delimited format
     colony = [simulation bestColony];
     evolvedParameters = [colony getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
-                           [evolvedParameters objectForKey:@"decayRate"],
-                           [evolvedParameters objectForKey:@"walkDropRate"],
-                           [evolvedParameters objectForKey:@"searchGiveupRate"],
-                           [evolvedParameters objectForKey:@"trailDropRate"],
-                           [evolvedParameters objectForKey:@"dirDevConst"],
-                           [evolvedParameters objectForKey:@"dirDevCoeff"],
-                           [evolvedParameters objectForKey:@"dirTimePow"],
-                           [evolvedParameters objectForKey:@"densityThreshold"],
-                           [evolvedParameters objectForKey:@"densityConstant"],
-                           [evolvedParameters objectForKey:@"densityPatchThreshold"],
-                           [evolvedParameters objectForKey:@"densityPatchConstant"],
-                           [evolvedParameters objectForKey:@"densityInfluenceThreshold"],
-                           [evolvedParameters objectForKey:@"densityInfluenceConstant"],
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+                           [evolvedParameters objectForKey:@"pheromoneDecayRate"],
+                           [evolvedParameters objectForKey:@"travelGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"searchGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"pheromoneGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
+                           [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
+                           [evolvedParameters objectForKey:@"pheromoneLayingRate"],
+                           [evolvedParameters objectForKey:@"siteFidelityRate"],
+                           [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
                            colony.tagsCollected]
                    toFile:logBestParameters];
     
     //Write averaged parameters to file using comma-delimited format
     colony = [simulation averageColony];
     evolvedParameters = [colony getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
-                           [evolvedParameters objectForKey:@"decayRate"],
-                           [evolvedParameters objectForKey:@"walkDropRate"],
-                           [evolvedParameters objectForKey:@"searchGiveupRate"],
-                           [evolvedParameters objectForKey:@"trailDropRate"],
-                           [evolvedParameters objectForKey:@"dirDevConst"],
-                           [evolvedParameters objectForKey:@"dirDevCoeff"],
-                           [evolvedParameters objectForKey:@"dirTimePow"],
-                           [evolvedParameters objectForKey:@"densityThreshold"],
-                           [evolvedParameters objectForKey:@"densityConstant"],
-                           [evolvedParameters objectForKey:@"densityPatchThreshold"],
-                           [evolvedParameters objectForKey:@"densityPatchConstant"],
-                           [evolvedParameters objectForKey:@"densityInfluenceThreshold"],
-                           [evolvedParameters objectForKey:@"densityInfluenceConstant"],
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+                           [evolvedParameters objectForKey:@"pheromoneDecayRate"],
+                           [evolvedParameters objectForKey:@"travelGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"searchGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"pheromoneGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
+                           [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
+                           [evolvedParameters objectForKey:@"pheromoneLayingRate"],
+                           [evolvedParameters objectForKey:@"siteFidelityRate"],
+                           [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
                            colony.tagsCollected]
                    toFile:logMeanParameters];
     
