@@ -11,7 +11,6 @@
 		42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB327516E3F56E00A29A3E /* Foundation.framework */; };
 		42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */; };
 		42AB327916E3F56E00A29A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB327816E3F56E00A29A3E /* main.m */; };
-		42AB327D16E3F56E00A29A3E /* AntBot_GA_CLI.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */; };
 		42BEB03D16F1220000DDA64E /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BEB03C16F1220000DDA64E /* Controller.m */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +31,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				42AB327D16E3F56E00A29A3E /* AntBot_GA_CLI.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -46,7 +44,6 @@
 		42AB327516E3F56E00A29A3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42AB327816E3F56E00A29A3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		42AB327B16E3F56E00A29A3E /* AntBot-GA-CLI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AntBot-GA-CLI-Prefix.pch"; sourceTree = "<group>"; };
-		42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AntBot_GA_CLI.1; sourceTree = "<group>"; };
 		42BEB03B16F1220000DDA64E /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		42BEB03C16F1220000DDA64E /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,7 +103,6 @@
 				422EED3516E99CC800F3884A /* Utilities.h */,
 				422EED3616E99CC800F3884A /* Utilities.m */,
 				42AB327816E3F56E00A29A3E /* main.m */,
-				42AB327C16E3F56E00A29A3E /* AntBot_GA_CLI.1 */,
 				42AB327A16E3F56E00A29A3E /* Supporting Files */,
 			);
 			path = "AntBot-GA-CLI";
