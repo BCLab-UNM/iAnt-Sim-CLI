@@ -26,9 +26,14 @@ int main(int argc, const char * argv[]) {
     [simulation setDistributionPowerlaw:1];
     [simulation setDistributionRandom:0];
     
-    if (argc == 2){
-        float std = atof(argv[1]);
-        [simulation setPerturbStd:std];
+    if (argc >= 2){
+        float localizationError = atof(argv[1]);
+        [simulation setLocalizationError:localizationError];
+    }
+    
+    if (argc >= 3){
+        float tagReadError = atof(argv[2]);
+        [simulation setTagReadError:tagReadError];
     }
     
     [controller start];
