@@ -22,9 +22,14 @@ int main(int argc, const char * argv[]) {
     [simulation setColonyCount:100];
     [simulation setGenerationCount:100];
     [simulation setTagCount:256];
-    [simulation setDistributionClustered:0];
-    [simulation setDistributionPowerlaw:1];
-    [simulation setDistributionRandom:0];
+    [simulation setEvaluationCount:8];
+    
+    [simulation setDistributionClustered:0.];
+    [simulation setDistributionPowerlaw:1.];
+    [simulation setDistributionRandom:0.];
+    
+    [simulation setLocalizationError:0.];
+    [simulation setTagReadError:0.];
     
     if (argc >= 2){
         float localizationError = atof(argv[1]);
@@ -34,6 +39,16 @@ int main(int argc, const char * argv[]) {
     if (argc >= 3){
         float tagReadError = atof(argv[2]);
         [simulation setTagReadError:tagReadError];
+    }
+    
+    if (argc >= 4){
+        int generationCount = atoi(argv[3]);
+        [simulation setGenerationCount:generationCount];
+    }
+    
+    if (argc >= 5){
+        int evaluationCount = atoi(argv[4]);
+        [simulation setEvaluationCount:evaluationCount];
     }
     
     [controller start];
