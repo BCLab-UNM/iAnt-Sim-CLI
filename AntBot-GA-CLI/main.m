@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     Simulation *simulation = [controller simulation];
     
     [simulation setAntCount:6];
-    [simulation setColonyCount:100];
+    [simulation setTeamCount:100];
     [simulation setGenerationCount:100];
     [simulation setTagCount:256];
     [simulation setEvaluationCount:8];

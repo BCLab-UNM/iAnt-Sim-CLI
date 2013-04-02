@@ -47,12 +47,12 @@
 }
 
 -(void) finishedGeneration:(int)generation {
-    Team *colony;
+    Team *team;
     NSMutableDictionary *evolvedParameters;
     
     //Write best parameters to file using comma-delimited format
-    colony = [simulation bestColony];
-    evolvedParameters = [colony getParameters];
+    team = [simulation bestTeam];
+    evolvedParameters = [team getParameters];
     [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
@@ -63,12 +63,12 @@
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
                            [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
-                           colony.tagsCollected]
+                           team.tagsCollected]
                    toFile:logBestParameters];
     
     //Write averaged parameters to file using comma-delimited format
-    colony = [simulation averageColony];
-    evolvedParameters = [colony getParameters];
+    team = [simulation averageTeam];
+    evolvedParameters = [team getParameters];
     [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
@@ -79,7 +79,7 @@
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
                            [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
-                           colony.tagsCollected]
+                           team.tagsCollected]
                    toFile:logMeanParameters];
     
     //If run has completed, add new line to each log file
