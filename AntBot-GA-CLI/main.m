@@ -11,7 +11,7 @@
 #import "Utilities.h"
 
 NSString *FILE_PATH = @"~/Dropbox/School/Research/AntBot/Data/GA evolved parameters";
-int NUM_ITERATIONS = 10;
+int NUM_ITERATIONS = 100;
 
 int main(int argc, const char * argv[]) {
     //Instantiate controller
@@ -28,27 +28,31 @@ int main(int argc, const char * argv[]) {
     [simulation setDistributionPowerlaw:1.];
     [simulation setDistributionRandom:0.];
     
-    [simulation setLocalizationError:0.];
-    [simulation setTagReadError:0.];
+    [simulation setPositionalError:0.];
+    [simulation setDetectionError:0.];
+    
+    [simulation setRandomizeParameters:TRUE];
+    
+    [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
-        float localizationError = atof(argv[1]);
-        [simulation setLocalizationError:localizationError];
+        float positionalError = atof(argv[1]);
+        [simulation setPositionalError:positionalError];
     }
     
     if (argc >= 3){
-        float tagReadError = atof(argv[2]);
-        [simulation setTagReadError:tagReadError];
+        float detectionError = atof(argv[2]);
+        [simulation setDetectionError:detectionError];
     }
     
     if (argc >= 4){
-        int generationCount = atoi(argv[3]);
+        float generationCount = atof(argv[3]);
         [simulation setGenerationCount:generationCount];
     }
-    
-    if (argc >= 5){
-        int evaluationCount = atoi(argv[4]);
-        [simulation setEvaluationCount:evaluationCount];
+
+    if (argc >= 5) {
+        int randomizeParameters = atoi(argv[4]);
+        [simulation setRandomizeParameters:randomizeParameters];
     }
     
     [controller start];

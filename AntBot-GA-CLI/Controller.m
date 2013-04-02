@@ -13,7 +13,7 @@
 @synthesize simulation,logBestParameters,logMeanParameters;
 
 - (id) initWithLogFile:(NSString*)_logFilePath {
-    if (self == [super init]) {
+    if (self = [super init]) {
         logFilePath = [_logFilePath stringByExpandingTildeInPath];
         simulation = [[Simulation alloc] init];
         [simulation setDelegate:self];
@@ -22,8 +22,8 @@
 }
 
 -(void)start {
-    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_localizationError=%3.2f_tagReadError=%3.2f.csv", logFilePath,[simulation localizationError],[simulation tagReadError]];
-    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_localizationError=%3.2f_tagReadError=%3.2f.csv", logFilePath,[simulation localizationError],[simulation tagReadError]];
+    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_positionalError=%3.2f_detectionError=%3.2f.csv", logFilePath,[simulation positionalError],[simulation detectionError]];
+    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_positionalError=%3.2f_detectionError=%3.2f.csv", logFilePath,[simulation positionalError],[simulation detectionError]];
     
     //Initialize log file with appropriate column headings
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -47,8 +47,8 @@
 }
 
 -(void) finishedGeneration:(int)generation {
-    Colony *colony = [[Colony alloc] init];
-    NSMutableDictionary *evolvedParameters = [[NSMutableDictionary alloc] init];
+    Colony *colony;
+    NSMutableDictionary *evolvedParameters;
     
     //Write best parameters to file using comma-delimited format
     colony = [simulation bestColony];
