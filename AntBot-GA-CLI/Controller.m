@@ -47,7 +47,7 @@
 }
 
 -(void) finishedGeneration:(int)generation {
-    Colony *colony;
+    Team *colony;
     NSMutableDictionary *evolvedParameters;
     
     //Write best parameters to file using comma-delimited format
