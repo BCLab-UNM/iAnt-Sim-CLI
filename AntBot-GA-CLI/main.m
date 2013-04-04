@@ -10,7 +10,7 @@
 #import "Controller.h"
 #import "Utilities.h"
 
-NSString *FILE_PATH = @"~/Dropbox/School/Research/AntBot/Data/GA evolved parameters";
+NSString *FILE_PATH = @"~/Desktop";
 int NUM_ITERATIONS = 10;
 
 int main(int argc, const char * argv[]) {
