@@ -15,6 +15,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		42537934170D322800490955 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 40ED65B516DABD31006F8494;
+			remoteInfo = "AntBot-GA";
+		};
 		42AB326A16E3F2ED00A29A3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */;
@@ -130,6 +137,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				42537935170D322800490955 /* PBXTargetDependency */,
 			);
 			name = "AntBot-GA-CLI";
 			productName = "AntBot-GA-CLI";
@@ -190,6 +198,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		42537935170D322800490955 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "AntBot-GA";
+			targetProxy = 42537934170D322800490955 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		42AB326116E3E8A800A29A3E /* Debug */ = {
