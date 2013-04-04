@@ -18,7 +18,7 @@ int main(int argc, const char * argv[]) {
     Controller *controller = [[Controller alloc] initWithLogFile:FILE_PATH];
     Simulation *simulation = [controller simulation];
     
-    [simulation setAntCount:6];
+    [simulation setRobotCount:6];
     [simulation setTeamCount:100];
     [simulation setGenerationCount:100];
     [simulation setTagCount:256];
