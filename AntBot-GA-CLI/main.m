@@ -31,8 +31,9 @@ int main(int argc, const char * argv[]) {
     [simulation setPositionalError:0.];
     [simulation setDetectionError:0.];
     
-    [simulation setRandomizeParameters:TRUE];
+    [simulation setFixedStepSize:TRUE];
     
+    [simulation setRandomizeParameters:TRUE];
     [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
