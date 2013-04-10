@@ -27,12 +27,13 @@
     
     //Initialize log file with appropriate column headings
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
+    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
                          @"pheromoneDecayRate",
                          @"travelGiveUpProbability",
                          @"searchGiveUpProbability",
                          @"uninformedSearchCorrelation",
                          @"informedSearchCorrelationDecayRate",
+                         @"stepSizeVariation",
                          @"pheromoneLayingRate",
                          @"siteFidelityRate",
                          @"pheromoneFollowingRate",
@@ -52,12 +53,13 @@
     //Write best parameters to file using comma-delimited format
     team = [simulation bestTeam];
     evolvedParameters = [team getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
                            [evolvedParameters objectForKey:@"searchGiveUpProbability"],
                            [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
                            [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
+                           [evolvedParameters objectForKey:@"stepSizeVariation"],
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
                            [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
@@ -67,12 +69,13 @@
     //Write averaged parameters to file using comma-delimited format
     team = [simulation averageTeam];
     evolvedParameters = [team getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
                            [evolvedParameters objectForKey:@"searchGiveUpProbability"],
                            [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
                            [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
+                           [evolvedParameters objectForKey:@"stepSizeVariation"],
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
                            [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
