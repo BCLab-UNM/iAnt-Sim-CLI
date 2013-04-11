@@ -28,8 +28,7 @@ int main(int argc, const char * argv[]) {
     [simulation setDistributionPowerlaw:1.];
     [simulation setDistributionRandom:0.];
     
-    [simulation setPositionalError:0.];
-    [simulation setDetectionError:0.];
+    [simulation setRealWorldError:FALSE];
     
     [simulation setFixedStepSize:TRUE];
     
@@ -37,21 +36,16 @@ int main(int argc, const char * argv[]) {
     [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
-        float positionalError = atof(argv[1]);
-        [simulation setPositionalError:positionalError];
+        int realWorldError = atoi(argv[3]);
+        [simulation setRealWorldError:realWorldError];
     }
     
     if (argc >= 3){
-        float detectionError = atof(argv[2]);
-        [simulation setDetectionError:detectionError];
-    }
-    
-    if (argc >= 4){
         float generationCount = atof(argv[3]);
         [simulation setGenerationCount:generationCount];
     }
 
-    if (argc >= 5) {
+    if (argc >= 4) {
         int randomizeParameters = atoi(argv[4]);
         [simulation setRandomizeParameters:randomizeParameters];
     }
