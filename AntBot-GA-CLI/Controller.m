@@ -22,8 +22,8 @@
 }
 
 -(void)start {
-    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_positionalError=%3.2f_detectionError=%3.2f.csv", logFilePath,[simulation positionalError],[simulation detectionError]];
-    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_positionalError=%3.2f_detectionError=%3.2f.csv", logFilePath,[simulation positionalError],[simulation detectionError]];
+    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
+    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
     
     //Initialize log file with appropriate column headings
     NSFileManager *fileManager = [NSFileManager defaultManager];
