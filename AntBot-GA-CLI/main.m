@@ -36,17 +36,17 @@ int main(int argc, const char * argv[]) {
     [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
-        int realWorldError = atoi(argv[3]);
+        int realWorldError = atoi(argv[1]);
         [simulation setRealWorldError:realWorldError];
     }
     
     if (argc >= 3){
-        float generationCount = atof(argv[3]);
+        float generationCount = atof(argv[2]);
         [simulation setGenerationCount:generationCount];
     }
 
     if (argc >= 4) {
-        int randomizeParameters = atoi(argv[4]);
+        int randomizeParameters = atoi(argv[3]);
         [simulation setRandomizeParameters:randomizeParameters];
     }
     
