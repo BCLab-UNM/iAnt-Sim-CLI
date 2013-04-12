@@ -50,6 +50,10 @@ int main(int argc, const char * argv[]) {
         [simulation setRandomizeParameters:randomizeParameters];
     }
     
+    if (argc >= 5) {
+        NUM_ITERATIONS = atoi(argv[4]);
+    }
+
     [controller start];
     
     for (int i=0; i<NUM_ITERATIONS; i++) {
