@@ -30,7 +30,8 @@ int main(int argc, const char * argv[]) {
     
     [simulation setRealWorldError:FALSE];
     
-    [simulation setFixedStepSize:TRUE];
+    [simulation setVariableStepSize:FALSE];
+    [simulation setUniformDirection:FALSE];
     
     [simulation setRandomizeParameters:TRUE];
     [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
