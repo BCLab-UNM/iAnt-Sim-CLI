@@ -33,6 +33,8 @@ int main(int argc, const char * argv[]) {
     [simulation setVariableStepSize:FALSE];
     [simulation setUniformDirection:FALSE];
     
+    [simulation setDecentralizedPheromones:FALSE];
+    
     [simulation setRandomizeParameters:TRUE];
     [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
