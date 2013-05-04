@@ -32,6 +32,7 @@ int main(int argc, const char * argv[]) {
     
     [simulation setVariableStepSize:FALSE];
     [simulation setUniformDirection:FALSE];
+    [simulation setAdaptiveWalk:TRUE];
     
     [simulation setDecentralizedPheromones:FALSE];
     
