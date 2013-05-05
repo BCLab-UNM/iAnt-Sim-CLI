@@ -22,8 +22,8 @@
 }
 
 -(void)start {
-    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
-    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
+    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_error=%d", logFilePath,[simulation realWorldError]];
+    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_error=%d", logFilePath,[simulation realWorldError]];
     
     //Initialize log file with appropriate column headings
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -39,8 +39,19 @@
                          @"pheromoneFollowingRate",
                          @"tagsCollected"];
     
-    [fileManager removeItemAtPath:logBestParameters error:NULL];
-    [fileManager removeItemAtPath:logMeanParameters error:NULL];
+    NSString *temp = logMeanParameters;
+    int offset = 0;
+    while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
+        temp = [NSString stringWithFormat:@"%@__%d",logMeanParameters,++offset];
+    }
+    logMeanParameters = [NSString stringWithFormat:@"%@.csv",temp];
+    
+    temp = logBestParameters;
+    offset = 0;
+    while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
+        temp = [NSString stringWithFormat:@"%@__%d",logBestParameters,++offset];
+    }
+    logBestParameters = [NSString stringWithFormat:@"%@.csv",temp];
     
     [Utilities appendText:headers toFile:logBestParameters];
     [Utilities appendText:headers toFile:logMeanParameters];
