@@ -23,6 +23,7 @@ int main(int argc, const char * argv[]) {
     [simulation setGenerationCount:100];
     [simulation setTagCount:256];
     [simulation setEvaluationCount:8];
+    [simulation setExploreTime:0];
     
     [simulation setDistributionClustered:0.];
     [simulation setDistributionPowerlaw:1.];

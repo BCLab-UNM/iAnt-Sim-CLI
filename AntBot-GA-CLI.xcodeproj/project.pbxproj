@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		421E19071766E721000C2BB1 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 424CD7A31766E35E00A531DD /* libc++.dylib */; };
 		422EED3716E99CC800F3884A /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 422EED3616E99CC800F3884A /* Utilities.m */; };
 		42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB327516E3F56E00A29A3E /* Foundation.framework */; };
 		42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		422EED3516E99CC800F3884A /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		422EED3616E99CC800F3884A /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		424CD7A31766E35E00A531DD /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "AntBot-GA.xcodeproj"; path = "AntBot-GA/AntBot-GA.xcodeproj"; sourceTree = "<group>"; };
 		42AB327316E3F56E00A29A3E /* AntBot-GA-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AntBot-GA-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AB327516E3F56E00A29A3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				421E19071766E721000C2BB1 /* libc++.dylib in Frameworks */,
 				42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */,
 				42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */,
 			);
@@ -118,6 +121,7 @@
 		42AB327A16E3F56E00A29A3E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				424CD7A31766E35E00A531DD /* libc++.dylib */,
 				42AB327B16E3F56E00A29A3E /* AntBot-GA-CLI-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -280,6 +284,7 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lstdc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
