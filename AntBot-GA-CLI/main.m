@@ -36,8 +36,7 @@ int main(int argc, const char * argv[]) {
     
     [simulation setDecentralizedPheromones:FALSE];
     
-    [simulation setRandomizeParameters:TRUE];
-    [simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
+    //[simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
         int realWorldError = atoi(argv[1]);
@@ -47,15 +46,6 @@ int main(int argc, const char * argv[]) {
     if (argc >= 3){
         float generationCount = atof(argv[2]);
         [simulation setGenerationCount:generationCount];
-    }
-
-    if (argc >= 4) {
-        int randomizeParameters = atoi(argv[3]);
-        [simulation setRandomizeParameters:randomizeParameters];
-    }
-    
-    if (argc >= 5) {
-        NUM_ITERATIONS = atoi(argv[4]);
     }
 
     [controller start];
