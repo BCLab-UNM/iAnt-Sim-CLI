@@ -37,7 +37,10 @@ int main(int argc, const char * argv[]) {
     
     [simulation setDecentralizedPheromones:FALSE];
     
-    //[simulation setParameterFile:[NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]]];
+    NSString *parameterFilePath = [NSString stringWithFormat:@"%@/parameters.csv",[FILE_PATH stringByExpandingTildeInPath]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
+        [simulation setParameterFile:parameterFilePath];
+    }
     
     if (argc >= 2){
         int realWorldError = atoi(argv[1]);
