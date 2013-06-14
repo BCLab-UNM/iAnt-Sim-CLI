@@ -16,6 +16,8 @@
 
 -(id) initWithLogFile:(NSString*)_logFilePath;
 -(void) start;
+-(void) parametersToFile;
+-(void) writeTeamToFile:(NSString*)file :(Team*)team;
 
 @property (nonatomic) Simulation* simulation;
 @property (nonatomic) NSString* logBestParameters;
