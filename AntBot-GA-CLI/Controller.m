@@ -75,7 +75,8 @@
 
     [Utilities appendText:[NSString stringWithFormat:@"robotCount,teamCount,generationCount,tagCount,evaluationCount,distributionClustered,distributionPowerlaw,distributionRandom,realWorldError,variableStepSize,uniformDirection,adaptiveWalk,decentralizedPheromones,randomizeParameters,parameterFile\n"] toFile:parametersFile];
 
-    NSString* textToAppend = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%f,%f,%f,%d,%d,%d,%d,%d,%@\n",       [simulation robotCount],
+    NSString* textToAppend = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%f,%f,%f,%d,%d,%d,%d,%d,%@\n",
+                              [simulation robotCount],
                               [simulation teamCount],
                               [simulation generationCount],
                               [simulation tagCount],

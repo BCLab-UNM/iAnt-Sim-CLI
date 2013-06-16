@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AntBot-GA/GA.h>
+#import <AntBot-GA/Sim.h>
 #import "Utilities.h"
 
 @interface Controller : NSObject {
