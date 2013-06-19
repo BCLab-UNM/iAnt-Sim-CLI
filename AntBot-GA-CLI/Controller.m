@@ -71,26 +71,9 @@
     while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
         temp = [NSString stringWithFormat:@"%@_%d",parametersFile,++offset];
     }
-    parametersFile = [NSString stringWithFormat:@"%@.csv",temp];
-
-    [Utilities appendText:[NSString stringWithFormat:@"robotCount,teamCount,generationCount,tagCount,evaluationCount,distributionClustered,distributionPowerlaw,distributionRandom,realWorldError,variableStepSize,uniformDirection,adaptiveWalk,decentralizedPheromones,randomizeParameters,parameterFile\n"] toFile:parametersFile];
-
-    NSString* textToAppend = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%f,%f,%f,%d,%d,%d,%d,%d,%@\n",
-                              [simulation robotCount],
-                              [simulation teamCount],
-                              [simulation generationCount],
-                              [simulation tagCount],
-                              [simulation evaluationCount],
-                              [simulation distributionClustered],
-                              [simulation distributionPowerlaw],
-                              [simulation distributionRandom],
-                              [simulation realWorldError],
-                              [simulation variableStepSize],
-                              [simulation uniformDirection],
-                              [simulation adaptiveWalk],
-                              [simulation decentralizedPheromones],
-                              [simulation parameterFile] ];
-    [Utilities appendText:textToAppend toFile:parametersFile];
+    parametersFile = [NSString stringWithFormat:@"%@.plist",temp];
+    
+    [[simulation getParameters] writeToFile:parametersFile atomically:NO];
 }
 
 
