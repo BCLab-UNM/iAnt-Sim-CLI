@@ -61,7 +61,7 @@
 }
 
 
--(void) parametersToFile{
+-(void) writeParametersToFile {
     NSString* parametersFile = [NSString stringWithFormat:@"%@/initParameters", logFilePath];
     
     //If the input parameters file already exists, put underscore then a number on the end of the file name. Increment the number until the file name does not already exist.
@@ -77,7 +77,7 @@
 }
 
 
--(void) writeTeamToFile:(NSString*)file :(Team*)team{
+-(void) writeTeamToFile:(NSString*)file :(Team*)team {
     NSMutableDictionary *evolvedParameters;
     //Write parameters to file using comma-delimited format
     evolvedParameters = [team getParameters];
@@ -91,12 +91,12 @@
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
                            [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
-                           team.tagsCollected]
+                           [team tagsCollected]]
                    toFile:file];
 }
 
 
--(void) writeHeadersToFile:(NSString*)file{
+-(void) writeHeadersToFile:(NSString*)file {
     NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
                          @"pheromoneDecayRate",
                          @"travelGiveUpProbability",
@@ -116,11 +116,15 @@
     Team *team;
     //Write best parameters to file using comma-delimited format
     team = [simulation bestTeam];
-    [self writeTeamToFile:logBestParameters :team];
-        
+    if (team) {
+        [self writeTeamToFile:logBestParameters :team];
+    }
+    
     //Write averaged parameters to file using comma-delimited format
     team = [simulation averageTeam];
-    [self writeTeamToFile:logMeanParameters :team];
+    if (team) {
+        [self writeTeamToFile:logMeanParameters :team];
+    }
     
     //If run has completed, add new line to each log file
     if (generation == [simulation generationCount] - 1) {
