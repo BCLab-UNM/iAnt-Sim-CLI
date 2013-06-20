@@ -10,13 +10,20 @@
 #import "Controller.h"
 #import "Utilities.h"
 
-NSString *INPUT_FILE_PATH = @"~/Desktop";
-NSString *OUTPUT_FILE_PATH = @"~/Desktop/antBotRun";
-int NUM_ITERATIONS = 10;
-
 int main(int argc, const char * argv[]) {
+    //Input file path
+    NSString *inputFilePath = [@"~/Desktop" stringByExpandingTildeInPath];
+    
+    //Output file path
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy_MM_dd_E/HH_mm_ss"];
+    NSString *outputFilePath = [NSString stringWithFormat:@"%@/iAntSimulation/%@", inputFilePath, [dateFormatter stringFromDate:[NSDate date]]];
+    
+    //Number of simulation iterations
+    int iterations = 10;
+    
     //Instantiate controller
-    Controller *controller = [[Controller alloc] initWithLogFile:OUTPUT_FILE_PATH];
+    Controller *controller = [[Controller alloc] initWithLogFile:outputFilePath];
     Simulation *simulation = [controller simulation];
     
     [simulation setRobotCount:6];
@@ -38,7 +45,7 @@ int main(int argc, const char * argv[]) {
     
     [simulation setDecentralizedPheromones:FALSE];
     
-    NSString *parameterFilePath = [NSString stringWithFormat:@"%@/parameters.plist",[INPUT_FILE_PATH stringByExpandingTildeInPath]];
+    NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
         [simulation setParameterFile:parameterFilePath];
     }
@@ -56,14 +63,14 @@ int main(int argc, const char * argv[]) {
     [controller start];
     
     //Write initialization parameters to file
-    [controller writeParametersToFile];
+    [[simulation getParameters] writeToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"] atomically:YES];
     
     //Run for NUM_ITERATIONS and find best overall team
     NSNumber* mostTags = [[NSNumber alloc] initWithFloat:0.];
     Team* bestTeam = [[Team alloc] init];
     NSMutableArray* bestTagsCollected;
     
-    for (int i=0; i<NUM_ITERATIONS; i++) {
+    for (int i=0; i<iterations; i++) {
         
         printf("Starting iteration %d\n",i);
         
@@ -81,11 +88,11 @@ int main(int argc, const char * argv[]) {
     
     //Write best parameters to file for later use
     NSMutableDictionary* bestParameters = [bestTeam getParameters];
-    [bestParameters writeToFile:[NSString stringWithFormat:@"%@/parameters.plist",[OUTPUT_FILE_PATH stringByExpandingTildeInPath]] atomically:YES];
+    [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/evolvedParameters.plist"] atomically:YES];
     
     //Write best tags collected array to file for analysis
-    NSString* joinedTags = [bestTagsCollected componentsJoinedByString:@"\n"];
-    [joinedTags writeToFile:[NSString stringWithFormat:@"%@/postEvaluation.txt",[OUTPUT_FILE_PATH stringByExpandingTildeInPath]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
+    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/tagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
     return 0;
 }
