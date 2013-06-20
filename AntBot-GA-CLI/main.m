@@ -12,7 +12,7 @@
 
 NSString *INPUT_FILE_PATH = @"~/Desktop";
 NSString *OUTPUT_FILE_PATH = @"~/Desktop/antBotRun";
-int NUM_ITERATIONS = 1;
+int NUM_ITERATIONS = 10;
 
 int main(int argc, const char * argv[]) {
     //Instantiate controller
@@ -38,11 +38,10 @@ int main(int argc, const char * argv[]) {
     
     [simulation setDecentralizedPheromones:FALSE];
     
-    NSString *parameterFilePath = [NSString stringWithFormat:@"%@/parameters.csv",[INPUT_FILE_PATH stringByExpandingTildeInPath]];
+    NSString *parameterFilePath = [NSString stringWithFormat:@"%@/parameters.plist",[INPUT_FILE_PATH stringByExpandingTildeInPath]];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
         [simulation setParameterFile:parameterFilePath];
     }
-    [simulation setPostEvaluationFile:[NSString stringWithFormat:@"%@/meanAndBest.csv",[OUTPUT_FILE_PATH stringByExpandingTildeInPath]]];
     
     if (argc >= 2){
         int realWorldError = atoi(argv[1]);
@@ -57,13 +56,36 @@ int main(int argc, const char * argv[]) {
     [controller start];
     
     //Write initialization parameters to file
-    [controller parametersToFile];
+    [controller writeParametersToFile];
+    
+    //Run for NUM_ITERATIONS and find best overall team
+    NSNumber* mostTags = [[NSNumber alloc] initWithFloat:0.];
+    Team* bestTeam = [[Team alloc] init];
+    NSMutableArray* bestTagsCollected;
     
     for (int i=0; i<NUM_ITERATIONS; i++) {
+        
         printf("Starting iteration %d\n",i);
+        
         //Run sim
-        [simulation start];
+        NSMutableArray* tagsCollected = [simulation run];
+        
+        //Record parameters of best performing team
+        NSNumber* totalTagsCollected = [tagsCollected valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
+        if (totalTagsCollected > mostTags) {
+            mostTags = totalTagsCollected;
+            bestTeam = [simulation averageTeam];
+            bestTagsCollected = tagsCollected;
+        }
     }
+    
+    //Write best parameters to file for later use
+    NSMutableDictionary* bestParameters = [bestTeam getParameters];
+    [bestParameters writeToFile:[NSString stringWithFormat:@"%@/parameters.plist",[OUTPUT_FILE_PATH stringByExpandingTildeInPath]] atomically:YES];
+    
+    //Write best tags collected array to file for analysis
+    NSString* joinedTags = [bestTagsCollected componentsJoinedByString:@"\n"];
+    [joinedTags writeToFile:[NSString stringWithFormat:@"%@/postEvaluation.txt",[OUTPUT_FILE_PATH stringByExpandingTildeInPath]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
     return 0;
 }
