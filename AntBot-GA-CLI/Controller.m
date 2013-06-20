@@ -21,61 +21,30 @@
     return self;
 }
 
--(void)start {
-    //Initialize log file with appropriate column headings
+-(void) start {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    //logFilePath is the same as OUTPUT_FILE_PATH declared in main.m
-    //Print the directory for error checking
-    NSLog(@"%@\n", logFilePath);
-    //If the path does not exist
-    if(![fileManager fileExistsAtPath:logFilePath]){
-        //Try to create the directory. If it fails, print an error message
-        if(![fileManager createDirectoryAtPath:logFilePath withIntermediateDirectories:YES attributes:nil error:NULL]){
-            NSLog(@"Error: Create folder failed %@", logFilePath);
-        }
+    //Create main directory
+    if(![fileManager createDirectoryAtPath:logFilePath withIntermediateDirectories:YES attributes:nil error:NULL]){
+        NSLog(@"Error: Create folder failed %@", logFilePath);
     }
-
+    //Create evolution subdirectory
+    if(![fileManager createDirectoryAtPath:[logFilePath stringByAppendingString:@"/evolution"] withIntermediateDirectories:YES attributes:nil error:NULL]){
+        NSLog(@"Error: Create folder failed %@", [logFilePath stringByAppendingString:@"/evolution"]);
+    }
+    //Create evaluation subdirectory
+    if(![fileManager createDirectoryAtPath:[logFilePath stringByAppendingString:@"/evaluation"] withIntermediateDirectories:YES attributes:nil error:NULL]){
+        NSLog(@"Error: Create folder failed %@", [logFilePath stringByAppendingString:@"/evaluation"]);
+    }
+    
     //Create the file names for the best parameters and mean parameters files.
-    logBestParameters = [NSString stringWithFormat:@"%@/bestParameters_error=%d", logFilePath,[simulation realWorldError]];
-    logMeanParameters = [NSString stringWithFormat:@"%@/meanParameters_error=%d", logFilePath,[simulation realWorldError]];
+    logBestParameters = [NSString stringWithFormat:@"%@/evolution/bestParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
+    logMeanParameters = [NSString stringWithFormat:@"%@/evolution/meanParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
     
-    //If the mean parameters file already exists, put underscore then a number on the end of the file name. Increment the number until the file name does not already exist.
-    NSString *temp = logMeanParameters;
-    int offset = 0;
-    while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
-        temp = [NSString stringWithFormat:@"%@_%d",logMeanParameters,++offset];
-    }
-    logMeanParameters = [NSString stringWithFormat:@"%@.csv",temp];
-
-    //If the best parameters file already exists, put underscore then a number on the end of the file name. Increment the number until the file name does not already exist.
-    temp = logBestParameters;
-    offset = 0;
-    while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
-        temp = [NSString stringWithFormat:@"%@_%d",logBestParameters,++offset];
-    }
-    logBestParameters = [NSString stringWithFormat:@"%@.csv",temp];
-    
+    //Initialize log file with appropriate column headings
     [self writeHeadersToFile:logBestParameters];
     [self writeHeadersToFile:logMeanParameters];
 }
-
-
--(void) writeParametersToFile {
-    NSString* parametersFile = [NSString stringWithFormat:@"%@/initParameters", logFilePath];
-    
-    //If the input parameters file already exists, put underscore then a number on the end of the file name. Increment the number until the file name does not already exist.
-    NSString *temp = parametersFile;
-    int offset = 0;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    while ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.csv",temp]]) {
-        temp = [NSString stringWithFormat:@"%@_%d",parametersFile,++offset];
-    }
-    parametersFile = [NSString stringWithFormat:@"%@.plist",temp];
-    
-    [[simulation getParameters] writeToFile:parametersFile atomically:NO];
-}
-
 
 -(void) writeTeamToFile:(NSString*)file :(Team*)team {
     NSMutableDictionary *evolvedParameters;
