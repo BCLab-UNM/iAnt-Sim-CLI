@@ -38,8 +38,8 @@
     }
     
     //Create the file names for the best parameters and mean parameters files.
-    logBestParameters = [NSString stringWithFormat:@"%@/evolution/bestParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
-    logMeanParameters = [NSString stringWithFormat:@"%@/evolution/meanParameters_error=%d.csv", logFilePath,[simulation realWorldError]];
+    logBestParameters = [NSString stringWithFormat:@"%@/evolution/bestParameters.csv", logFilePath];
+    logMeanParameters = [NSString stringWithFormat:@"%@/evolution/meanParameters.csv", logFilePath];
     
     //Initialize log file with appropriate column headings
     [self writeHeadersToFile:logBestParameters];
