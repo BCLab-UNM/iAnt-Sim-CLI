@@ -84,15 +84,23 @@ int main(int argc, const char * argv[]) {
             bestTeam = [simulation averageTeam];
             bestTagsCollected = tagsCollected;
         }
+        
+        //Write best parameters to file for later use
+        NSMutableDictionary* bestParameters = [bestTeam getParameters];
+        [bestParameters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
+        
+        //Write best tags collected array to file for analysis
+        NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
+        [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     }
     
     //Write best parameters to file for later use
     NSMutableDictionary* bestParameters = [bestTeam getParameters];
-    [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/evolvedParameters.plist"] atomically:YES];
+    [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestEvolvedParameters.plist"] atomically:YES];
     
     //Write best tags collected array to file for analysis
     NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
-    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/tagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
     return 0;
 }
