@@ -44,6 +44,12 @@ int main(int argc, const char * argv[]) {
     [simulation setAdaptiveWalk:TRUE];
     
     [simulation setDecentralizedPheromones:FALSE];
+
+    [simulation setCrossoverRate:1.0];
+    [simulation setMutationRate:0.1];
+    [simulation setCrossoverOperator:UniformPointCrossId];
+    [simulation setMutationOperator:FixedVarMutId];
+    [simulation setElitism:true];
     
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
