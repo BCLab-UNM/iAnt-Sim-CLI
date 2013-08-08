@@ -36,6 +36,12 @@ int main(int argc, const char * argv[]) {
     [simulation setAdaptiveWalk:TRUE];
     
     [simulation setDecentralizedPheromones:FALSE];
+
+    [simulation setCrossoverRate:1.0];
+    [simulation setMutationRate:0.1];
+    [simulation setCrossoverOperator:UniformPointCrossId];
+    [simulation setMutationOperator:FixedVarMutId];
+    [simulation setElitism:true];
     
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
@@ -66,15 +72,23 @@ int main(int argc, const char * argv[]) {
             bestTeam = [simulation averageTeam];
             bestTagsCollected = tagsCollected;
         }
+        
+        //Write best parameters to file for later use
+        NSMutableDictionary* bestParameters = [bestTeam getParameters];
+        [bestParameters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
+        
+        //Write best tags collected array to file for analysis
+        NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
+        [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     }
     
     //Write best parameters to file for later use
     NSMutableDictionary* bestParameters = [bestTeam getParameters];
-    [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/evolvedParameters.plist"] atomically:YES];
+    [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestEvolvedParameters.plist"] atomically:YES];
     
     //Write best tags collected array to file for analysis
     NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
-    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/tagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
     return 0;
 }
