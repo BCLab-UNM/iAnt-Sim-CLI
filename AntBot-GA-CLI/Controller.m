@@ -1,11 +1,3 @@
-//
-//  Controller.m
-//  AntBot-GA-CLI
-//
-//  Created by Joshua Hecker on 3/13/13.
-//  Copyright (c) 2013 Joshua Hecker. All rights reserved.
-//
-
 #import "Controller.h"
 
 @implementation Controller
@@ -50,32 +42,34 @@
     NSMutableDictionary *evolvedParameters;
     //Write parameters to file using comma-delimited format
     evolvedParameters = [team getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
                            [evolvedParameters objectForKey:@"searchGiveUpProbability"],
                            [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
-                           [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
+                           [evolvedParameters objectForKey:@"informedSearchCorrelation"],
+                           [evolvedParameters objectForKey:@"informedGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"neighborSearchGiveUpProbability"],
                            [evolvedParameters objectForKey:@"stepSizeVariation"],
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
-                           [evolvedParameters objectForKey:@"pheromoneFollowingRate"],
                            [team tagsCollected]]
                    toFile:file];
 }
 
 
 -(void) writeHeadersToFile:(NSString*)file {
-    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
+    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,\n",
                          @"pheromoneDecayRate",
                          @"travelGiveUpProbability",
                          @"searchGiveUpProbability",
                          @"uninformedSearchCorrelation",
-                         @"informedSearchCorrelationDecayRate",
+                         @"informedSearchCorrelation",
+                         @"informedGiveUpProbability",
+                         @"neighborSearchGiveUpProbability",
                          @"stepSizeVariation",
                          @"pheromoneLayingRate",
                          @"siteFidelityRate",
-                         @"pheromoneFollowingRate",
                          @"tagsCollected"];
     [Utilities appendText:headers toFile:file];
 }
