@@ -1,11 +1,3 @@
-//
-//  main.m
-//  AntBot-GA-CLI
-//
-//  Created by Joshua Hecker on 3/3/13.
-//  Copyright (c) 2013 Joshua Hecker. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "Controller.h"
 #import "Utilities.h"
@@ -48,16 +40,6 @@ int main(int argc, const char * argv[]) {
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
         [simulation setParameterFile:parameterFilePath];
-    }
-    
-    if (argc >= 2){
-        int realWorldError = atoi(argv[1]);
-        [simulation setRealWorldError:realWorldError];
-    }
-    
-    if (argc >= 3){
-        float generationCount = atof(argv[2]);
-        [simulation setGenerationCount:generationCount];
     }
 
     [controller start];
