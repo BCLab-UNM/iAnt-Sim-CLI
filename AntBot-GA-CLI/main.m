@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     
     [simulation setRobotCount:6];
     [simulation setTeamCount:100];
-    [simulation setGenerationCount:100];
+    [simulation setGenerationCount:100]; //Negative 1 makes simulation ignore this.
     [simulation setEvaluationLimit:-1]; //Negative 1 makes simulation ignore this.
     [simulation setTagCount:256];
     [simulation setEvaluationCount:8];
@@ -51,6 +51,9 @@ int main(int argc, const char * argv[]) {
         if([args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || [args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
                   [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n\n",
+                   @"-iters ",
+                   iterations,
+                   @"   //Sets the number of iterations to run.",
                    @"-genLimit ",
                    [simulation generationCount],
                    @"   //Sets the generationCount, the limit on the number of generations. Set to -1 to ignore and use evaluationLimit instead.",
@@ -87,9 +90,15 @@ int main(int argc, const char * argv[]) {
                    @"-noElitism   //Turns off elitism. Elitism is enabled by default."]);
             exit(0);
         }
-        //Set generationCount aka generationLimit
-        NSString *flag = [NSString stringWithFormat:@"-genLimit"];
+        //Set iterations
+        NSString *flag = [NSString stringWithFormat:@"-iters"];
         int index = [args indexOfObject:flag];
+        if(index != -1){
+            iterations = [[args objectAtIndex:(index+1)] intValue];
+        }
+        //Set generationCount aka generationLimit
+        flag = [NSString stringWithFormat:@"-genLimit"];
+        index = [args indexOfObject:flag];
         if(index != -1){
             [simulation setGenerationCount:[[args objectAtIndex:(index+1)] intValue]];
         }
@@ -193,7 +202,9 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n",
+           @"iterations = ",
+           iterations,
            @"generationCount aka generation limit = ",
            [simulation generationCount],
            @"evaluationLimit = ",
