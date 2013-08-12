@@ -50,7 +50,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if([args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || [args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -92,67 +92,67 @@ int main(int argc, const char * argv[]) {
         }
         //Set iterations
         NSString *flag = [NSString stringWithFormat:@"-iters"];
-        int index = [args indexOfObject:flag];
+        int index = (int)[args indexOfObject:flag];
         if(index != -1){
             iterations = [[args objectAtIndex:(index+1)] intValue];
         }
         //Set generationCount aka generationLimit
         flag = [NSString stringWithFormat:@"-genLimit"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setGenerationCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set evaluationLimit
         flag = [NSString stringWithFormat:@"-evalLimit"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setEvaluationLimit:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set evaluationCount. This is the number of evaluations per individual.
         flag = [NSString stringWithFormat:@"-evalCount"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setEvaluationCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set teamCount aka population size.
         flag = [NSString stringWithFormat:@"-popSize"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setTeamCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set distributionClustered
         flag = [NSString stringWithFormat:@"-distribCluster"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionClustered:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set distributionPowerlaw
         flag = [NSString stringWithFormat:@"-distribPowerLaw"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionPowerlaw:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set distributionRandom
         flag = [NSString stringWithFormat:@"-distribRandom"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionRandom:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set crossoverRate
         flag = [NSString stringWithFormat:@"-crossRate"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setCrossoverRate:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set mutationRate
         flag = [NSString stringWithFormat:@"-mutRate"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setMutationRate:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set mutation operator
         flag = [NSString stringWithFormat:@"-mutOp"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
             switch ([[args objectAtIndex:(index+1)] intValue]){
@@ -172,7 +172,7 @@ int main(int argc, const char * argv[]) {
         }
         //Set crossover operator
         flag = [NSString stringWithFormat:@"-crossOp"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
             switch ([[args objectAtIndex:(index+1)] intValue]){
@@ -195,7 +195,7 @@ int main(int argc, const char * argv[]) {
         }
         //Turn off elitism. Elitism is enabled by default.
         flag = [NSString stringWithFormat:@"-noElitism"];
-        index = [args indexOfObject:flag];
+        index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setElitism:FALSE];
         }
