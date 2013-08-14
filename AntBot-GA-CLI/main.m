@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     if (args && ([args count] > 1)){
         //Check if the user is requesting help.
-        if([args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || [args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
+        if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
                   [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@%@\n\n",
                    @"-iters ",
