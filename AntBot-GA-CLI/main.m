@@ -1,3 +1,5 @@
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+
 #import <Foundation/Foundation.h>
 #import "Controller.h"
 #import "Utilities.h"
