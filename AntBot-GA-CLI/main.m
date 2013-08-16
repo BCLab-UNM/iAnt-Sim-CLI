@@ -268,12 +268,12 @@ int main(int argc, const char * argv[]) {
             bestTagsCollected = tagsCollected;
         }
         
-        //Write best parameters to file for later use
-        NSMutableDictionary* bestParameters = [bestTeam getParameters];
-        [bestParameters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
+        //Write (averaged) parameters to file for later use
+        NSMutableDictionary* meanParamters = [[simulation averageTeam] getParameters];
+        [meanParamters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
         
-        //Write best tags collected array to file for analysis
-        NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
+        //Write tags collected array to file for analysis
+        NSString* allTags = [tagsCollected componentsJoinedByString:@"\n"];
         [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     }
     
