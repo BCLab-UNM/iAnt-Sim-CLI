@@ -90,7 +90,8 @@
     }
     
     //If run has completed, add new line to each log file
-    if (generation == [simulation generationCount] - 1) {
+    if ((generation == [simulation generationCount] - 1) || ([simulation evalCount] >= [simulation evaluationLimit]))
+    {
         [Utilities appendText:@"\n" toFile:logBestParameters];
         [Utilities appendText:@"\n" toFile:logMeanParameters];
     }
