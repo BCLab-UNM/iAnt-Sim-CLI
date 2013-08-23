@@ -20,33 +20,7 @@ int main(int argc, const char * argv[]) {
     Controller *controller = [[Controller alloc] initWithLogFile:outputFilePath];
     Simulation *simulation = [controller simulation];
     
-    [simulation setRobotCount:6];
-    [simulation setTeamCount:100];
-    [simulation setGenerationCount:100]; //Negative 1 makes simulation ignore this.
-    [simulation setEvaluationLimit:-1]; //Negative 1 makes simulation ignore this.
-    [simulation setTagCount:256];
-    [simulation setEvaluationCount:8];
-    [simulation setExploreTime:0];
-    
-    [simulation setDistributionClustered:0.];
-    [simulation setDistributionPowerlaw:1.];
-    [simulation setDistributionRandom:0.];
-    
-    [simulation setRealWorldError:FALSE];
-    
-    [simulation setVariableStepSize:FALSE];
-    [simulation setUniformDirection:FALSE];
-    [simulation setAdaptiveWalk:TRUE];
-    
-    [simulation setDecentralizedPheromones:FALSE];
-
-    [simulation setCrossoverRate:1.0];
-    [simulation setMutationRate:0.1];
-    [simulation setCrossoverOperator:UniformPointCrossId];
-    [simulation setMutationOperator:FixedVarMutId];
-    [simulation setElitism:TRUE];
-    
-    //Read values from the command line
+    //Read arguments from the command line as an array
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     if (args && ([args count] > 1)){
         //Check if the user is requesting help.
