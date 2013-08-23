@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -63,71 +63,72 @@ int main(int argc, const char * argv[]) {
                    @"-crossOp ",
                    [simulation crossoverOperator],
                    @"   //Sets the crossover operator.\n      //Crossover operator options include:\n      //0 for independent assortment\n      //1 for uniform crossover\n      //2 for one point crossover\n      //3 for two point crossover",
-                   @"-noElitism   //Turns off elitism. Elitism is enabled by default."]);
+                   @"-noElitism   //Turns off elitism. Elitism is enabled by default.",
+                   @"-realWorldError   //Turns on real world error. Real world error is disabled by default."]);
             exit(0);
         }
         //Set iterations
-        NSString *flag = [NSString stringWithFormat:@"-iters"];
+        NSString *flag = @"-iters";
         int index = (int)[args indexOfObject:flag];
         if(index != -1){
             iterations = [[args objectAtIndex:(index+1)] intValue];
         }
         //Set generationCount aka generationLimit
-        flag = [NSString stringWithFormat:@"-genLimit"];
+        flag = @"-genLimit";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setGenerationCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set evaluationLimit
-        flag = [NSString stringWithFormat:@"-evalLimit"];
+        flag = @"-evalLimit";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setEvaluationLimit:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set evaluationCount. This is the number of evaluations per individual.
-        flag = [NSString stringWithFormat:@"-evalCount"];
+        flag = @"-evalCount";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setEvaluationCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set teamCount aka population size.
-        flag = [NSString stringWithFormat:@"-popSize"];
+        flag = @"-popSize";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setTeamCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set distributionClustered
-        flag = [NSString stringWithFormat:@"-distribCluster"];
+        flag = @"-distribCluster";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionClustered:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set distributionPowerlaw
-        flag = [NSString stringWithFormat:@"-distribPowerLaw"];
+        flag = @"-distribPowerLaw";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionPowerlaw:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set distributionRandom
-        flag = [NSString stringWithFormat:@"-distribRandom"];
+        flag = @"-distribRandom";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setDistributionRandom:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set crossoverRate
-        flag = [NSString stringWithFormat:@"-crossRate"];
+        flag = @"-crossRate";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setCrossoverRate:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set mutationRate
-        flag = [NSString stringWithFormat:@"-mutRate"];
+        flag = @"-mutRate";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setMutationRate:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set mutation operator
-        flag = [NSString stringWithFormat:@"-mutOp"];
+        flag = @"-mutOp";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
@@ -147,7 +148,7 @@ int main(int argc, const char * argv[]) {
             }
         }
         //Set crossover operator
-        flag = [NSString stringWithFormat:@"-crossOp"];
+        flag = @"-crossOp";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
@@ -170,15 +171,22 @@ int main(int argc, const char * argv[]) {
             }
         }
         //Turn off elitism. Elitism is enabled by default.
-        flag = [NSString stringWithFormat:@"-noElitism"];
+        flag = @"-noElitism";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setElitism:FALSE];
         }
+        //Enable real world error. Real world error is disabled by default.
+        flag = @"-realWorldError";
+        index = (int)[args indexOfObject:flag];
+        if (index != -1) {
+            [simulation setRealWorldError:YES];
+        }
+        
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -204,7 +212,9 @@ int main(int argc, const char * argv[]) {
            @"crossoverOperator = ",
            [simulation crossoverOperator],
            @"elitism = ",
-           [simulation elitism]]);
+           [simulation elitism],
+           @"realWorldError = ",
+           [simulation realWorldError]]);
     
     //Error check
     if([simulation generationCount] < 1 && [simulation evaluationLimit] < 1){
