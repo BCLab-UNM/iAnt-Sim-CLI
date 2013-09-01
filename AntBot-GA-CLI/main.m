@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -42,6 +42,9 @@ int main(int argc, const char * argv[]) {
                    @"-popSize ",
                    [simulation teamCount],
                    @"   //Sets the teamCount, aka population size.",
+                   @"-tickCount ",
+                   [simulation tickCount],
+                   @"   //Set the tickCount, the amount of time that teams are allowed to search for tags.",
                    @"-distribCluster ",
                    [simulation distributionClustered],
                    @"   //Sets the distributionClustered.",
@@ -96,6 +99,12 @@ int main(int argc, const char * argv[]) {
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setTeamCount:[[args objectAtIndex:(index+1)] intValue]];
+        }
+        //Set tickCount
+        flag = @"-tickCount";
+        index = (int)[args indexOfObject:flag];
+        if (index != -1){
+            [simulation setTickCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set distributionClustered
         flag = @"-distribCluster";
@@ -186,7 +195,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -197,6 +206,8 @@ int main(int argc, const char * argv[]) {
            [simulation evaluationCount],
            @"teamCount aka population size = ",
            [simulation teamCount],
+           @"tickCount = ",
+           [simulation tickCount],
            @"distributionClustered = ",
            [simulation distributionClustered],
            @"distributionPowerlaw = ",
