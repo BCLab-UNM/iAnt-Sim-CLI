@@ -42,14 +42,12 @@
     NSMutableDictionary *evolvedParameters;
     //Write parameters to file using comma-delimited format
     evolvedParameters = [team getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
+    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
                            [evolvedParameters objectForKey:@"pheromoneDecayRate"],
                            [evolvedParameters objectForKey:@"travelGiveUpProbability"],
                            [evolvedParameters objectForKey:@"searchGiveUpProbability"],
                            [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
-                           [evolvedParameters objectForKey:@"informedSearchCorrelation"],
-                           [evolvedParameters objectForKey:@"informedGiveUpProbability"],
-                           [evolvedParameters objectForKey:@"neighborSearchGiveUpProbability"],
+                           [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
                            [evolvedParameters objectForKey:@"stepSizeVariation"],
                            [evolvedParameters objectForKey:@"pheromoneLayingRate"],
                            [evolvedParameters objectForKey:@"siteFidelityRate"],
@@ -59,14 +57,12 @@
 
 
 -(void) writeHeadersToFile:(NSString*)file {
-    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,\n",
+    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,\n",
                          @"pheromoneDecayRate",
                          @"travelGiveUpProbability",
                          @"searchGiveUpProbability",
                          @"uninformedSearchCorrelation",
-                         @"informedSearchCorrelation",
-                         @"informedGiveUpProbability",
-                         @"neighborSearchGiveUpProbability",
+                         @"informedSearchCorrelationDecayRate",
                          @"stepSizeVariation",
                          @"pheromoneLayingRate",
                          @"siteFidelityRate",
