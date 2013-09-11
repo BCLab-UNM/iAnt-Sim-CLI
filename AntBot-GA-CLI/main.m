@@ -257,7 +257,7 @@ int main(int argc, const char * argv[]) {
         
         //Record parameters of best performing team
         NSNumber* totalTagsCollected = [tagsCollected valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
-        if (totalTagsCollected > mostTags) {
+        if ([totalTagsCollected doubleValue] > [mostTags doubleValue]) {
             mostTags = totalTagsCollected;
             bestTeam = [simulation averageTeam];
             bestTagsCollected = tagsCollected;
