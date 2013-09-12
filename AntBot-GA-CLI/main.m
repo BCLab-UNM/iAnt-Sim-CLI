@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -45,6 +45,9 @@ int main(int argc, const char * argv[]) {
                    @"-teamSize ",
                    [simulation robotCount],
                    @"   //Sets the robotCount, aka team size.",
+                   @"-tagCount ",
+                   [simulation tagCount],
+                   @"   //Sets tagCount, the number of tags distributed on the grid.",
                    @"-tickCount ",
                    [simulation tickCount],
                    @"   //Set the tickCount, the amount of time that teams are allowed to search for tags.",
@@ -111,6 +114,12 @@ int main(int argc, const char * argv[]) {
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setRobotCount:[[args objectAtIndex:(index+1)] intValue]];
+        }
+        //Set tagCount
+        flag = @"-tagCount";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setTagCount:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set tickCount
         flag = @"-tickCount";
@@ -214,7 +223,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -227,6 +236,8 @@ int main(int argc, const char * argv[]) {
            [simulation teamCount],
            @"robotCount aka team size = ",
            [simulation robotCount],
+           @"tagCount = ",
+           [simulation tagCount],
            @"tickCount = ",
            [simulation tickCount],
            @"gridSize = ",
