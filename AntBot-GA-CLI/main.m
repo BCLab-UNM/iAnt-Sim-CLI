@@ -109,11 +109,12 @@ int main(int argc, const char * argv[]) {
         if (index != -1){
             [simulation setTickCount:[[args objectAtIndex:(index+1)] intValue]];
         }
-        //Set tickCount
+        //Set gridSize and nest location
         flag = @"-gridSize";
         index = (int)[args indexOfObject:flag];
         if (index != -1){
             [simulation setGridSize:NSMakeSize([[args objectAtIndex:(index+1)] intValue],[[args objectAtIndex:(index+2)] intValue])];
+            [simulation setNest:NSMakePoint(floor([simulation gridSize].width/2.),floor([simulation gridSize].height/2.))];
         }
         //Set distributionClustered
         flag = @"-distribCluster";
@@ -204,7 +205,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -219,6 +220,8 @@ int main(int argc, const char * argv[]) {
            [simulation tickCount],
            @"gridSize = ",
            NSStringFromSize([simulation gridSize]),
+           @"nest = ",
+           NSStringFromPoint([simulation nest]),
            @"distributionClustered = ",
            [simulation distributionClustered],
            @"distributionPowerlaw = ",
