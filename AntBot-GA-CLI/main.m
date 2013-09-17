@@ -76,7 +76,7 @@ int main(int argc, const char * argv[]) {
                    [simulation crossoverOperator],
                    @"   //Sets the crossover operator.\n      //Crossover operator options include:\n      //0 for independent assortment\n      //1 for uniform crossover\n      //2 for one point crossover\n      //3 for two point crossover",
                    @"-noElitism   //Turns off elitism. Elitism is enabled by default.",
-                   @"-realWorldError   //Turns on real world error. Real world error is disabled by default."]);
+                   @"-noError   //Turns off real world error. Real world error is enabled by default."]);
             exit(0);
         }
         //Set iterations
@@ -213,11 +213,11 @@ int main(int argc, const char * argv[]) {
         if(index != -1){
             [simulation setElitism:FALSE];
         }
-        //Enable real world error. Real world error is disabled by default.
-        flag = @"-realWorldError";
+        //Enable real world error. Real world error is enabled by default.
+        flag = @"-noError";
         index = (int)[args indexOfObject:flag];
         if (index != -1) {
-            [simulation setRealWorldError:YES];
+            [simulation setRealWorldError:NO];
         }
         
     }
@@ -260,7 +260,7 @@ int main(int argc, const char * argv[]) {
            [simulation crossoverOperator],
            @"elitism = ",
            [simulation elitism],
-           @"realWorldError = ",
+           @"noError = ",
            [simulation realWorldError]]);
     
     //Error check
