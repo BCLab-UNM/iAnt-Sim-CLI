@@ -260,7 +260,7 @@ int main(int argc, const char * argv[]) {
            [simulation crossoverOperator],
            @"elitism = ",
            [simulation elitism],
-           @"noError = ",
+           @"error = ",
            [simulation realWorldError]]);
     
     //Error check
