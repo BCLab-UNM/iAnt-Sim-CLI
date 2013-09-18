@@ -263,12 +263,6 @@ int main(int argc, const char * argv[]) {
            @"error = ",
            [simulation realWorldError]]);
     
-    //Error check
-    if([simulation generationCount] < 1 && [simulation evaluationLimit] < 1){
-        NSLog(@"ERROR: generationCount and evaluationLimit cannot both be less than 1.");
-        exit(0);
-    }
-    
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
         [simulation setParameterFile:parameterFilePath];
