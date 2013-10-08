@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -50,7 +50,10 @@ int main(int argc, const char * argv[]) {
                    @"   //Sets tagCount, the number of tags distributed on the grid.",
                    @"-tickCount ",
                    [simulation tickCount],
-                   @"   //Set the tickCount, the amount of time that teams are allowed to search for tags.",
+                   @"   //Set the tickCount, the total amount of time that teams are allowed to search.",
+                   @"-exploreTime ",
+                   [simulation exploreTime],
+                   @"   //Set the exploreTime, the amount of time that teams are allowed to explore for tags to cluster.",
                    @"-gridSize ",
                    NSStringFromSize([simulation gridSize]),
                    @"   //Sets dimensions of grid {width, length}",
@@ -126,6 +129,12 @@ int main(int argc, const char * argv[]) {
         index = (int)[args indexOfObject:flag];
         if (index != -1){
             [simulation setTickCount:[[args objectAtIndex:(index+1)] intValue]];
+        }
+        //Set exploreTime
+        flag = @"-exploreTime";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setExploreTime:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set gridSize and nest location
         flag = @"-gridSize";
@@ -223,7 +232,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -240,6 +249,8 @@ int main(int argc, const char * argv[]) {
            [simulation tagCount],
            @"tickCount = ",
            [simulation tickCount],
+           @"exploreTime = ",
+           [simulation exploreTime],
            @"gridSize = ",
            NSStringFromSize([simulation gridSize]),
            @"nest = ",
