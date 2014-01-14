@@ -49,7 +49,7 @@
     //Write averaged parameters to file using comma-delimited format
     team = [simulation averageTeam];
     if (team) {
-        [team writeParameters:[team getParameters] toFile:logBestParameters];
+        [team writeParameters:[team getParameters] toFile:logMeanParameters];
     }
     
     //If run has completed, add new line to each log file
