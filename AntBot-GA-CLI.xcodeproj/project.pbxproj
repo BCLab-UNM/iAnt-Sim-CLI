@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		421E19071766E721000C2BB1 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 424CD7A31766E35E00A531DD /* libc++.dylib */; };
-		422EED3716E99CC800F3884A /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 422EED3616E99CC800F3884A /* Utilities.m */; };
 		42610B6416E44E1100D22B2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB327516E3F56E00A29A3E /* Foundation.framework */; };
 		42610B6516E44E1400D22B2E /* libAntBot-GA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AB326B16E3F2ED00A29A3E /* libAntBot-GA.a */; };
 		42AB327916E3F56E00A29A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB327816E3F56E00A29A3E /* main.m */; };
@@ -45,8 +44,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		422EED3516E99CC800F3884A /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		422EED3616E99CC800F3884A /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		424CD7A31766E35E00A531DD /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		42AB326616E3F2EC00A29A3E /* AntBot-GA.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "AntBot-GA.xcodeproj"; path = "AntBot-GA/AntBot-GA.xcodeproj"; sourceTree = "<group>"; };
 		42AB327316E3F56E00A29A3E /* AntBot-GA-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AntBot-GA-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,8 +107,6 @@
 			children = (
 				42BEB03B16F1220000DDA64E /* Controller.h */,
 				42BEB03C16F1220000DDA64E /* Controller.m */,
-				422EED3516E99CC800F3884A /* Utilities.h */,
-				422EED3616E99CC800F3884A /* Utilities.m */,
 				42AB327816E3F56E00A29A3E /* main.m */,
 				42AB327A16E3F56E00A29A3E /* Supporting Files */,
 			);
@@ -196,7 +191,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AB327916E3F56E00A29A3E /* main.m in Sources */,
-				422EED3716E99CC800F3884A /* Utilities.m in Sources */,
 				42BEB03D16F1220000DDA64E /* Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
