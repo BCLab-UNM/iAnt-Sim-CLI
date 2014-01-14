@@ -34,59 +34,26 @@
     logMeanParameters = [NSString stringWithFormat:@"%@/evolution/meanParameters.csv", logFilePath];
     
     //Initialize log file with appropriate column headings
-    [self writeHeadersToFile:logBestParameters];
-    [self writeHeadersToFile:logMeanParameters];
+    [Team writeParameterNamesToFile:logBestParameters];
+    [Team writeParameterNamesToFile:logMeanParameters];
 }
 
--(void) writeTeamToFile:(NSString*)file :(Team*)team {
-    NSMutableDictionary *evolvedParameters;
-    //Write parameters to file using comma-delimited format
-    evolvedParameters = [team getParameters];
-    [Utilities appendText:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%f\n",
-                           [evolvedParameters objectForKey:@"pheromoneDecayRate"],
-                           [evolvedParameters objectForKey:@"travelGiveUpProbability"],
-                           [evolvedParameters objectForKey:@"searchGiveUpProbability"],
-                           [evolvedParameters objectForKey:@"uninformedSearchCorrelation"],
-                           [evolvedParameters objectForKey:@"informedSearchCorrelationDecayRate"],
-                           [evolvedParameters objectForKey:@"stepSizeVariation"],
-                           [evolvedParameters objectForKey:@"pheromoneLayingRate"],
-                           [evolvedParameters objectForKey:@"siteFidelityRate"],
-                           [team tagsCollected]]
-                   toFile:file];
-}
-
-
--(void) writeHeadersToFile:(NSString*)file {
-    NSString* headers = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,\n",
-                         @"pheromoneDecayRate",
-                         @"travelGiveUpProbability",
-                         @"searchGiveUpProbability",
-                         @"uninformedSearchCorrelation",
-                         @"informedSearchCorrelationDecayRate",
-                         @"stepSizeVariation",
-                         @"pheromoneLayingRate",
-                         @"siteFidelityRate",
-                         @"tagsCollected"];
-    [Utilities appendText:headers toFile:file];
-}
-
-
--(void) finishedGeneration:(int)generation {
+-(void) finishedGeneration:(int)generation atEvaluation:(int)evaluation {
     Team *team;
     //Write best parameters to file using comma-delimited format
     team = [simulation bestTeam];
     if (team) {
-        [self writeTeamToFile:logBestParameters :team];
+        [team writeParameters:[team getParameters] toFile:logBestParameters];
     }
     
     //Write averaged parameters to file using comma-delimited format
     team = [simulation averageTeam];
     if (team) {
-        [self writeTeamToFile:logMeanParameters :team];
+        [team writeParameters:[team getParameters] toFile:logBestParameters];
     }
     
     //If run has completed, add new line to each log file
-    if ((generation == [simulation generationCount] - 1) || ([simulation evalCount] >= [simulation evaluationLimit]))
+    if ((generation == [simulation generationCount] - 1) || (evaluation >= [simulation evaluationLimit]))
     {
         [Utilities appendText:@"\n" toFile:logBestParameters];
         [Utilities appendText:@"\n" toFile:logMeanParameters];
