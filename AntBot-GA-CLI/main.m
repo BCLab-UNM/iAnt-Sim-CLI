@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Controller.h"
-#import "Utilities.h"
 
 int main(int argc, const char * argv[]) {
     //Input file path
@@ -222,17 +221,11 @@ int main(int argc, const char * argv[]) {
         if(index != -1){
             [simulation setElitism:FALSE];
         }
-        //Enable real world error. Real world error is enabled by default.
-        flag = @"-noError";
-        index = (int)[args indexOfObject:flag];
-        if (index != -1) {
-            [simulation setRealWorldError:NO];
-        }
         
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -270,9 +263,7 @@ int main(int argc, const char * argv[]) {
            @"crossoverOperator = ",
            [simulation crossoverOperator],
            @"elitism = ",
-           [simulation elitism],
-           @"error = ",
-           [simulation realWorldError]]);
+           [simulation elitism]]);
     
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
