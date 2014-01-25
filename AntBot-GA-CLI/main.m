@@ -219,13 +219,19 @@ int main(int argc, const char * argv[]) {
         flag = @"-noElitism";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
-            [simulation setElitism:FALSE];
+            [simulation setElitism:NO];
+        }
+        //Turn off error. Error is enabled by default.
+        flag = @"-noError";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setObservedError:NO];
         }
         
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -263,7 +269,9 @@ int main(int argc, const char * argv[]) {
            @"crossoverOperator = ",
            [simulation crossoverOperator],
            @"elitism = ",
-           [simulation elitism]]);
+           [simulation elitism],
+           @"error = ",
+           [simulation observedError]]);
     
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
