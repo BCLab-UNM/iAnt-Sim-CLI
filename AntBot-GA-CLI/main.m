@@ -13,7 +13,7 @@ int main(int argc, const char * argv[]) {
     NSString *outputFilePath = [NSString stringWithFormat:@"%@/iAntSimulation/%@", inputFilePath, [dateFormatter stringFromDate:[NSDate date]]];
     
     //Number of simulation iterations
-    int iterations = 1;
+    int iterations = 10;
     
     //Instantiate controller
     Controller *controller = [[Controller alloc] initWithLogFile:outputFilePath];
