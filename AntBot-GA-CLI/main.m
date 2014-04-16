@@ -272,6 +272,8 @@ int main(int argc, const char * argv[]) {
            [simulation elitism],
            @"error = ",
            [simulation observedError]]);
+    Robot* startR = [[Robot alloc]init];
+    printf("%d Battery Life (ticks)\n%f%% Battery Percentage (of total time)\nUsing 'windowed' init of battery params\n\n", startR.batteryFull, ((float)startR.batteryFull / (float)simulation.tickCount) * 100);
     
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
