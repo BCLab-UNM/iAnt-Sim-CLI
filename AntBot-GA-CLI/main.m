@@ -284,7 +284,7 @@ int main(int argc, const char * argv[]) {
     [[simulation getParameters] writeToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"] atomically:YES];
     
     //Run for NUM_ITERATIONS and find best overall team
-    NSNumber* mostTags = [[NSNumber alloc] initWithFloat:0.];
+    NSNumber* mostTags = @(0.);
     Team* bestTeam = [[Team alloc] init];
     NSMutableArray* bestTagsCollected;
     
