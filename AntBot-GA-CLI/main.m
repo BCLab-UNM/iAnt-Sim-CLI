@@ -289,6 +289,9 @@ int main(int argc, const char * argv[]) {
         [simulation setParameterFile:parameterFilePath];
     }
 
+    [simulation setPheromoneFilename:[outputFilePath stringByAppendingString:@"/pheromones.txt"]];
+    [simulation setTagFilename:[outputFilePath stringByAppendingString:@"/tags.txt"]];
+
     [controller start];
     
     //Write initialization parameters to file
