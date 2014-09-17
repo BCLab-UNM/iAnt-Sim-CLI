@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -53,6 +53,9 @@ int main(int argc, const char * argv[]) {
                    @"-exploreTime ",
                    [simulation exploreTime],
                    @"   //Set the exploreTime, the amount of time that teams are allowed to explore for tags to cluster.",
+                   @"-exploredCutoff ",
+                   [simulation exploredCutoff],
+                   @"   //Set the exploredCutoff, the fraction of cells in a region that must be visited before the region is declared 'explored' and subsequently closed.",
                    @"-gridSize ",
                    NSStringFromSize([simulation gridSize]),
                    @"   //Sets dimensions of grid {width, length}",
@@ -134,6 +137,12 @@ int main(int argc, const char * argv[]) {
         index = (int)[args indexOfObject:flag];
         if(index != -1){
             [simulation setExploreTime:[[args objectAtIndex:(index+1)] intValue]];
+        }
+        //Set exploredCutoff
+        flag = @"-exploredCutoff";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setExploredCutoff:[[args objectAtIndex:(index+1)] floatValue]];
         }
         //Set gridSize and nest location
         flag = @"-gridSize";
@@ -231,7 +240,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -250,6 +259,8 @@ int main(int argc, const char * argv[]) {
            [simulation tickCount],
            @"exploreTime = ",
            [simulation exploreTime],
+           @"exploredCutoff = ",
+           [simulation exploredCutoff],
            @"gridSize = ",
            NSStringFromSize([simulation gridSize]),
            @"nest = ",
@@ -286,16 +297,19 @@ int main(int argc, const char * argv[]) {
     [[simulation getParameters] writeToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"] atomically:YES];
     
     //Run for NUM_ITERATIONS and find best overall team
-    NSNumber* mostTags = [[NSNumber alloc] initWithFloat:0.];
+    NSNumber* mostTags = @(0.);
     Team* bestTeam = [[Team alloc] init];
     NSMutableArray* bestTagsCollected;
+    NSMutableArray* bestTimeToCompleteCollection;
     
     for (int i=0; i<iterations; i++) {
         
         printf("Starting iteration %d\n",i);
         
         //Run sim
-        NSMutableArray* tagsCollected = [simulation run];
+        NSMutableDictionary* data = [simulation run];
+        NSMutableArray* tagsCollected = data[@"fitness"];
+        NSMutableArray* timeToCompleteCollection = data[@"time"];
         
         //Record parameters of best performing team
         NSNumber* totalTagsCollected = [tagsCollected valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
@@ -303,6 +317,7 @@ int main(int argc, const char * argv[]) {
             mostTags = totalTagsCollected;
             bestTeam = [simulation averageTeam];
             bestTagsCollected = tagsCollected;
+            bestTimeToCompleteCollection = timeToCompleteCollection;
         }
         
         //Write (averaged) parameters to file for later use
@@ -312,6 +327,10 @@ int main(int argc, const char * argv[]) {
         //Write tags collected array to file for analysis
         NSString* allTags = [tagsCollected componentsJoinedByString:@"\n"];
         [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        
+        //Write time to complete collection array to file for analysis
+        NSString* allTime = [timeToCompleteCollection componentsJoinedByString:@"\n"];
+        [allTime writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/timeToCompleteCollection%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     }
     
     //Write best parameters to file for later use
@@ -321,6 +340,10 @@ int main(int argc, const char * argv[]) {
     //Write best tags collected array to file for analysis
     NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
     [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    
+    //Write best time to complete collection array to file for analysis
+    NSString* allTime = [bestTimeToCompleteCollection componentsJoinedByString:@"\n"];
+    [allTime writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTimeToCompleteCollection.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
     return 0;
 }
