@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>informedSearchCorrelationDecayRate</key>
+	<real>0.251652657985687</real>
+	<key>pheromoneDecayRate</key>
+	<real>0.00827652402222157</real>
+	<key>pheromoneLayingRate</key>
+	<real>4.421579837799072</real>
+	<key>searchGiveUpProbability</key>
+	<real>0.000770092010498047</real>
+	<key>siteFidelityRate</key>
+	<real>3.53300333023071</real>
+	<key>stepSizeVariation</key>
+	<real>0.969828546047211</real>
+	<key>travelGiveUpProbability</key>
+	<real>0.322792589664459</real>
+	<key>uninformedSearchCorrelation</key>
+	<real>0.279912143945694</real>
+</dict>
+</plist>

@@ -34,4 +34,12 @@ Data for all runs will be dumped to your Desktop in a folder named iAntSimulatio
 Controlling Ant Behavior
 ---
 
-The GA looks for a file on the desktop named `evolvedParameters.plist` to control initial colony behavior parameters.  You can find a sample `evolvedParameters.plist` file in the AntBot-GA-CLI folder.
+The GA looks for a file on the desktop named `evolvedParameters.plist` to control initial colony behavior parameters.  You can find a sample `evolvedParameters.plist` file in the AntBot-GA-CLI folder.  Short summary of the parameters:
+
+- `travelGiveupProbability` - Probability that ants will stop moving while in their departing state.  A higher value means that ants will tend to explore areas closer to the nest.
+- `searchGiveupProbability` - Probability that ants will return to the nest while in the searching state.
+- `uninformedSearchCorrelation` - Controls how many radians an ant will turn while performing an uninformed random walk.
+- `informedSearchCorrelationDecayRate` - If an ant is informed about potential tags (either via pheromones or site fidelity), it will perform a more 'tight' random walk, decaying over time.  This parameter controls the rate of decay.
+- `pheromoneDecayRate` - Controls pheromone exponential decay.  A value of 0 will disable pheromone decaying.
+- `pheromoneLayingRate` - Controls how often pheromones will be laid (related to number of observed neighbors upon finding a tag).
+- `siteFidelityRate` - Similar to pheromone rate, controls how often an ant will return to the same location as the last tag it found.
