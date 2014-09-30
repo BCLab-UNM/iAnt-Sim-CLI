@@ -81,7 +81,9 @@ int main(int argc, const char * argv[]) {
                    [simulation crossoverOperator],
                    @"   //Sets the crossover operator.\n      //Crossover operator options include:\n      //0 for independent assortment\n      //1 for uniform crossover\n      //2 for one point crossover\n      //3 for two point crossover",
                    @"-noElitism   //Turns off elitism. Elitism is enabled by default.",
-                   @"-noError   //Turns off real world error. Real world error is enabled by default."]);
+                   @"-noError   //Turns off real world error. Real world error is enabled by default.",
+                   @"-logPheromones //Log pheromone locations to a file.",
+                   @"-logTags //Log tag locations to a file."]);
             exit(0);
         }
         //Set iterations
@@ -236,7 +238,19 @@ int main(int argc, const char * argv[]) {
         if(index != -1){
             [simulation setObservedError:NO];
         }
-        
+
+        //Turn on pheromone logging.
+        flag = @"-logPheromones";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setLogPheromones:YES];
+        }
+
+        flag = @"-logTags";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setLogTags:YES];
+        }
     }
     //print out the parameters to the console.
     NSLog(@"%@",
