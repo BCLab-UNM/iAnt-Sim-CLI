@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%@%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%@%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -59,6 +59,9 @@ int main(int argc, const char * argv[]) {
                    @"-gridSize ",
                    NSStringFromSize([simulation gridSize]),
                    @"   //Sets dimensions of grid {width, length}",
+                   @"-pileNumber ",
+                   [simulation numberOfClusteredPiles],
+                   @"   //Sets the number of piles for clustered distribution",
                    @"-distribCluster ",
                    [simulation distributionClustered],
                    @"   //Sets the distributionClustered.",
@@ -151,6 +154,12 @@ int main(int argc, const char * argv[]) {
             [simulation setGridSize:NSMakeSize([[args objectAtIndex:(index+1)] intValue],[[args objectAtIndex:(index+2)] intValue])];
             [simulation setNest:NSMakePoint(floor([simulation gridSize].width/2.),floor([simulation gridSize].height/2.))];
         }
+        //Set numberOfClusteredPiles
+        flag = @"-pileNumber";
+        index = (int)[args indexOfObject:flag];
+        if(index != -1){
+            [simulation setNumberOfClusteredPiles:[[args objectAtIndex:(index+1)] intValue]];
+        }
         //Set distributionClustered
         flag = @"-distribCluster";
         index = (int)[args indexOfObject:flag];
@@ -240,7 +249,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%@\n%@%@\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%@\n%@%@\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -265,6 +274,8 @@ int main(int argc, const char * argv[]) {
            NSStringFromSize([simulation gridSize]),
            @"nest = ",
            NSStringFromPoint([simulation nest]),
+           @"numberOfClusteredPiles = ",
+           [simulation numberOfClusteredPiles],
            @"distributionClustered = ",
            [simulation distributionClustered],
            @"distributionPowerlaw = ",
