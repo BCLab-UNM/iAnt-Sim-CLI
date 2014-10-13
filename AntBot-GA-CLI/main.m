@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
         //Check if the user is requesting help.
         if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
             NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%f%@\n%@%@%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
+                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
                    @"-iters ",
                    iterations,
                    @"   //Sets the number of iterations to run.",
@@ -53,9 +53,9 @@ int main(int argc, const char * argv[]) {
                    @"-exploreTime ",
                    [simulation exploreTime],
                    @"   //Set the exploreTime, the amount of time that teams are allowed to explore for tags to cluster.",
-                   @"-exploredCutoff ",
-                   [simulation exploredCutoff],
-                   @"   //Set the exploredCutoff, the fraction of cells in a region that must be visited before the region is declared 'explored' and subsequently closed.",
+                   @"-tagCutoff ",
+                   [simulation clusteringTagCutoff],
+                   @"   //Set the clusteringTagCutoff, the number of tags that must be discovered before EM is applied to reduce the random exploration region size.",
                    @"-gridSize ",
                    NSStringFromSize([simulation gridSize]),
                    @"   //Sets dimensions of grid {width, length}",
@@ -142,10 +142,10 @@ int main(int argc, const char * argv[]) {
             [simulation setExploreTime:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set exploredCutoff
-        flag = @"-exploredCutoff";
+        flag = @"-tagCutoff";
         index = (int)[args indexOfObject:flag];
         if(index != -1){
-            [simulation setExploredCutoff:[[args objectAtIndex:(index+1)] floatValue]];
+            [simulation setClusteringTagCutoff:[[args objectAtIndex:(index+1)] intValue]];
         }
         //Set gridSize and nest location
         flag = @"-gridSize";
@@ -249,7 +249,7 @@ int main(int argc, const char * argv[]) {
     }
     //print out the parameters to the console.
     NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%f\n%@%@\n%@%@\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
+          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
            @"iterations = ",
            iterations,
            @"generationCount aka generation limit = ",
@@ -268,8 +268,8 @@ int main(int argc, const char * argv[]) {
            [simulation tickCount],
            @"exploreTime = ",
            [simulation exploreTime],
-           @"exploredCutoff = ",
-           [simulation exploredCutoff],
+           @"tagCutoff = ",
+           [simulation clusteringTagCutoff],
            @"gridSize = ",
            NSStringFromSize([simulation gridSize]),
            @"nest = ",
