@@ -75,8 +75,9 @@ int main(int argc, char * argv[]) {
                 
                 @{
                     @"name": @"observedError",
-                    @"desc": @"Enable real-world error (disable with --no-ObservedError).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"error",
+                    @"desc": @"Enable real-world error (disable with --no-error)."
                 },
                 
                 @{
@@ -86,32 +87,37 @@ int main(int argc, char * argv[]) {
                 
                 @{
                     @"name": @"useTravel",
-                    @"desc": @"Enable travel behavior (disable with --no-useTravel).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"travel",
+                    @"desc": @"Enable travel behavior (disable with --no-travel)."
                 },
                 
                 @{
                     @"name": @"useGiveUp",
-                    @"desc": @"Enable give up behavior during search (disable with --no-useGiveUp).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"giveUp",
+                    @"desc": @"Enable give up behavior during search (disable with --no-giveUp)."
                 },
                 
                 @{
                     @"name": @"useSiteFidelity",
-                    @"desc": @"Enable site fidelity behavior (disable with --no-useSiteFidelity).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"siteFidelity",
+                    @"desc": @"Enable site fidelity behavior (disable with --no-siteFidelity)."
                 },
                 
                 @{
                     @"name": @"usePheromone",
-                    @"desc": @"Enable pheromone-following behavior (disable with --no-usePheromone).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"pheromone",
+                    @"desc": @"Enable pheromone-following behavior (disable with --no-pheromone)."
                 },
                 
                 @{
                     @"name": @"useInformedWalk",
-                    @"desc": @"Enable use of informed walk when searching a previously discovered location (disable with --no-useInformedWalk).",
-                    @"type": @"flag"
+                    @"type": @"flag",
+                    @"long": @"informedWalk",
+                    @"desc": @"Enable use of informed walk when searching a previously discovered location (disable with --no-informedWalk)."
                 }
             ]
         },
