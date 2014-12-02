@@ -74,14 +74,44 @@ int main(int argc, char * argv[]) {
                 },
                 
                 @{
-                    @"name": @"error",
-                    @"desc": @"Enable real-world error (disable with --no-error).",
+                    @"name": @"observedError",
+                    @"desc": @"Enable real-world error (disable with --no-ObservedError).",
                     @"type": @"flag"
                 },
                 
                 @{
                     @"name": @"clusteringTagCutoff",
                     @"desc": @"Number of tags that must be discovered before EM is applied to reduce the random exploration region size."
+                },
+                
+                @{
+                    @"name": @"useTravel",
+                    @"desc": @"Enable travel behavior (disable with --no-useTravel).",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"useGiveUp",
+                    @"desc": @"Enable give up behavior during search (disable with --no-useGiveUp).",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"useSiteFidelity",
+                    @"desc": @"Enable site fidelity behavior (disable with --no-useSiteFidelity).",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"usePheromone",
+                    @"desc": @"Enable pheromone-following behavior (disable with --no-usePheromone).",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"useInformedWalk",
+                    @"desc": @"Enable use of informed walk when searching a previously discovered location (disable with --no-useInformedWalk).",
+                    @"type": @"flag"
                 }
             ]
         },
@@ -267,7 +297,7 @@ int main(int argc, char * argv[]) {
     [controller start];
     
     // Write initialization parameters to file
-    [[simulation getParameters] writeToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"] atomically:YES];
+    [simulation writeParametersToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"]];
     
     // Run iterations and find best overall team
     NSNumber* mostTags = @(0.);
