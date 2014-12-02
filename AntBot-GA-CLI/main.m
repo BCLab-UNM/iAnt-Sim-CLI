@@ -143,13 +143,13 @@ int main(int argc, char * argv[]) {
                     @"name": @"gridSize",
                     @"flag": @'s',
                     @"long": @"size",
-                    @"desc": @"Size of the grid formatted as \"{width, height}\"."
+                    @"desc": @"Size of the grid formatted as \"{width, height}\" (including quotation marks)."
                 },
                 
                 @{
                     @"name": @"nest",
                     @"flag": @'n',
-                    @"desc": @"Location of the nest on the grid formatted as \"{x, y}\"."
+                    @"desc": @"Location of the nest on the grid formatted as \"{x, y}\" (including quotation marks)."
                 }
             ]
         },
