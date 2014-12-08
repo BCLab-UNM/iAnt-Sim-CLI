@@ -134,7 +134,7 @@ typedef NSString *(^GBOptionStringBlock)(void);
 
 - (void)printValuesFromSettings:(GBSettings *)settings;
 - (void)printVersion;
-- (void)printHelp;
+- (void)printHelpFromSettings:(GBSettings *)settings;
 
 #pragma mark - Getting information from user
 

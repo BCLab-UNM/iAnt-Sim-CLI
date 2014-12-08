@@ -49,75 +49,75 @@ int main(int argc, char * argv[]) {
                     @"name": @"evaluationCount",
                     @"flag": @'e',
                     @"long": @"evaluations",
-                    @"desc": @"Number of evaluations per individual."
+                    @"desc": @"Number of evaluations per individual"
                 },
                 
                 @{
                     @"name": @"teamCount",
                     @"flag": @'p',
                     @"long": @"teams",
-                    @"desc": @"Number of teams (population size)."
+                    @"desc": @"Number of teams (population size)"
                 },
                 
                 @{
                     @"name": @"robotCount",
                     @"flag": @'r',
                     @"long": @"robots",
-                    @"desc": @"Number of robots per team."
+                    @"desc": @"Number of robots per team"
                 },
                 
                 @{
                     @"name": @"tickCount",
                     @"flag": @'t',
                     @"long": @"ticks",
-                    @"desc": @"Number of ticks per evaluation.  One tick equals half a second."
+                    @"desc": @"Number of ticks per evaluation; one tick equals half a second"
                 },
                 
                 @{
                     @"name": @"observedError",
                     @"type": @"flag",
                     @"long": @"error",
-                    @"desc": @"Enable real-world error (disable with --no-error)."
+                    @"desc": @"Enable real-world error"
                 },
                 
                 @{
                     @"name": @"clusteringTagCutoff",
-                    @"desc": @"Number of tags that must be discovered before EM is applied to reduce the random exploration region size."
+                    @"desc": @"Number of tags that must be discovered before EM is applied to reduce the random exploration region size"
                 },
                 
                 @{
                     @"name": @"useTravel",
                     @"type": @"flag",
                     @"long": @"travel",
-                    @"desc": @"Enable travel behavior (disable with --no-travel)."
+                    @"desc": @"Enable travel behavior"
                 },
                 
                 @{
                     @"name": @"useGiveUp",
                     @"type": @"flag",
                     @"long": @"giveUp",
-                    @"desc": @"Enable give up behavior during search (disable with --no-giveUp)."
+                    @"desc": @"Enable give up behavior during search"
                 },
                 
                 @{
                     @"name": @"useSiteFidelity",
                     @"type": @"flag",
                     @"long": @"siteFidelity",
-                    @"desc": @"Enable site fidelity behavior (disable with --no-siteFidelity)."
+                    @"desc": @"Enable site fidelity behavior"
                 },
                 
                 @{
                     @"name": @"usePheromone",
                     @"type": @"flag",
                     @"long": @"pheromone",
-                    @"desc": @"Enable pheromone-following behavior (disable with --no-pheromone)."
+                    @"desc": @"Enable pheromone-following behavior"
                 },
                 
                 @{
                     @"name": @"useInformedWalk",
                     @"type": @"flag",
                     @"long": @"informedWalk",
-                    @"desc": @"Enable use of informed walk when searching a previously discovered location (disable with --no-informedWalk)."
+                    @"desc": @"Enable use of informed walk when searching a previously discovered location"
                 }
             ]
         },
@@ -136,20 +136,20 @@ int main(int argc, char * argv[]) {
                     @"name": @"numberOfClusteredPiles",
                     @"flag": @'P',
                     @"long": @"piles",
-                    @"desc": @"Number of piles tags are distributed into."
+                    @"desc": @"Number of piles tags are distributed into"
                 },
                 
                 @{
                     @"name": @"gridSize",
                     @"flag": @'s',
                     @"long": @"size",
-                    @"desc": @"Size of the grid formatted as \"{width, height}\" (including quotation marks)."
+                    @"desc": @"Size of the grid formatted as \"{width, height}\" (including quotation marks)"
                 },
                 
                 @{
                     @"name": @"nest",
                     @"flag": @'n',
-                    @"desc": @"Location of the nest on the grid formatted as \"{x, y}\" (including quotation marks)."
+                    @"desc": @"Location of the nest on the grid formatted as \"{x, y}\" (including quotation marks)"
                 }
             ]
         },
@@ -170,7 +170,7 @@ int main(int argc, char * argv[]) {
                 @{
                     @"name": @"crossoverOperator",
                     @"flag": @'C',
-                    @"desc": @"0 for independent assortment, 1 for uniform crossover, 2 for one point crossover, 3 for two point crossover.",
+                    @"desc": @"0 for independent assortment, 1 for uniform crossover, 2 for one point crossover, 3 for two point crossover",
                 },
                 
                 @{
@@ -181,7 +181,7 @@ int main(int argc, char * argv[]) {
                 
                 @{
                     @"name": @"elitism",
-                    @"desc": @"Enable elitism (disable with --no-elitism).",
+                    @"desc": @"Enable elitism",
                     @"type": @"flag"
                 }
             ]
@@ -193,14 +193,14 @@ int main(int argc, char * argv[]) {
                 @{
                     @"name": @"help",
                     @"flag": @'h',
-                    @"desc": @"Print this.",
+                    @"desc": @"Print this",
                     @"type": @"flag"
                 },
                 
                 @{
                     @"name": @"version",
                     @"flag": @'v',
-                    @"desc": @"Show version information.",
+                    @"desc": @"Show version information",
                     @"type": @"flag"
                 }
             ]
@@ -286,7 +286,7 @@ int main(int argc, char * argv[]) {
     
     // Help and version checks
     if([settings boolForKey:@"help"] == YES) {
-        [helper printHelp];
+        [helper printHelpFromSettings:defaults];
         return 0;
     }
     else if([settings boolForKey:@"version"] == YES) {

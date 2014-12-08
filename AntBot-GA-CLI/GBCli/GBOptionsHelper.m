@@ -244,7 +244,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 	printf("%s\n", output.UTF8String);
 }
 
-- (void)printHelp {	
+- (void)printHelpFromSettings:(GBSettings*) settings {
 	// Prepare all rows.
 	__block NSUInteger maxNameTypeLength = 0;
 	__block NSUInteger lastSeparatorIndex = NSNotFound;
@@ -278,14 +278,27 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 		NSString *shortOption = (definition.shortOption > 0) ? [NSString stringWithFormat:@"-%c", definition.shortOption] : @"  ";
 		NSString *longOption = [NSString stringWithFormat:@"--%@", definition.longOption];
 		NSString *description = definition.description ? definition.description : @"";
-		//NSUInteger requirements = [self requirements:definition];
+		NSUInteger requirements = [self requirements:definition];
 		
 		// Prepare option type and update longest option+type string size for better alignment later on.
 		NSString *type = @"";
-		/*if (requirements == GBValueRequired)
-			type = @" <value>";
-		else if (requirements == GBValueOptional)
-			type = @" [<value>]";*/
+		if (requirements == GBValueRequired) {
+            type = @" <value>";
+        }
+		else if (requirements == GBValueOptional) {
+            if([settings objectForKey:definition.longOption]) {
+                type = [NSString stringWithFormat:@" (%@)", [settings objectForKey:definition.longOption]];
+            }
+            else {
+                type = @" [<value>]";
+            }
+        }
+        else if (requirements == GBValueNone) {
+            if(![definition.longOption isEqualToString:@"help"] && ![definition.longOption isEqualToString:@"version"]) {
+                longOption = [longOption stringByAppendingString:[NSString stringWithFormat:@", --no-%@", definition.longOption]];
+            }
+        }
+        
 		maxNameTypeLength = MAX(longOption.length + type.length, maxNameTypeLength);
 		NSString *nameAndType = [NSString stringWithFormat:@"%@%@", longOption, type];
 		
