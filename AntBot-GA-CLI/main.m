@@ -216,6 +216,11 @@ int main(int argc, char * argv[]) {
     helper.applicationVersion = ^{ return @"1.0"; };
     
     // Set up arguments
+    NSDictionary* parameters = [simulation getParameters];
+    GBSettings* defaults = [GBSettings settingsWithName:@"Default" parent: nil];
+    [defaults setInteger:iterations forKey:@"iterations"];
+    
+    GBSettings* settings = [GBSettings settingsWithName:@"Input" parent:defaults];
     NSMutableDictionary* argumentAliases = [[NSMutableDictionary alloc] init]; // Convert between argument names and Simulation properties.
     for(NSDictionary* group in arguments) {
         [helper registerSeparator:group[@"header"]];
@@ -237,12 +242,19 @@ int main(int argc, char * argv[]) {
                 flag = GBOptionRequiredValue;
             }
             
+            if([group[@"header"] isEqualToString:@"Other Options"]) {
+                flag |= GBOptionNoPrint;
+            }
+            
             [helper registerOption:shortName long:longName description:option[@"desc"] flags:flag];
+            
+            if([parameters objectForKey:option[@"name"]]) {
+                [defaults setObject:[parameters objectForKey:option[@"name"]] forKey:longName];
+            }
         }
     }
     
     // Parse arguments
-    GBSettings* settings = [GBSettings settingsWithName:@"parsed" parent:nil];
     GBCommandLineParser* parser = [[GBCommandLineParser alloc] init];
     [parser registerSettings:settings];
     [parser registerOptions:helper];
@@ -299,6 +311,8 @@ int main(int argc, char * argv[]) {
     if([settings integerForKey:@"iterations"] > 0) {
         iterations = (int)[settings integerForKey:@"iterations"];
     }
+    
+    [helper printValuesFromSettings:settings];
     
     // User-specified evolved parameters
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];

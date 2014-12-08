@@ -147,7 +147,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 				[rows removeLastObject];
 			}
 			[rows addObject:@[]];
-			[rows addObject:@[ definition.description ] ];
+			[rows addObject:@[ [NSString stringWithFormat:@"\033[1m%@\033[00m", definition.description] ] ];
 			lastSeparatorIndex = rows.count;
 			return;
 		}
@@ -199,7 +199,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 	}
 
 	// Render header.
-	[self replacePlaceholdersAndPrintStringFromBlock:self.printValuesHeader];
+	//[self replacePlaceholdersAndPrintStringFromBlock:self.printValuesHeader];
 	
 	// Render all arguments if any.
 	if (settings.arguments.count > 0) {
@@ -220,7 +220,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 	[rows enumerateObjectsUsingBlock:^(NSArray *columns, NSUInteger rowIdx, BOOL *stopRow) {
 		NSMutableString *output = [NSMutableString string];
 		[columns enumerateObjectsUsingBlock:^(NSString *value, NSUInteger colIdx, BOOL *stopCol) {
-			NSUInteger columnSize = [[lengths objectAtIndex:colIdx] unsignedIntegerValue];
+			NSUInteger columnSize = [[lengths objectAtIndex:colIdx] unsignedIntegerValue] + 8;
 			NSUInteger valueSize = value.length;
 			[output appendString:value];
 			while (valueSize <= columnSize) {
@@ -260,7 +260,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 				[rows removeLastObject];
 			}
 			[rows addObject:@[]];
-			[rows addObject:@[ definition.description ]];
+			[rows addObject:@[ [NSString stringWithFormat:@"\033[1m%@\033[00m", definition.description] ]];
 			lastSeparatorIndex = rows.count;
 			return;
 		}
@@ -278,7 +278,7 @@ static NSUInteger GBOptionInternalEndGroup = 1 << 10;
 		NSString *shortOption = (definition.shortOption > 0) ? [NSString stringWithFormat:@"-%c", definition.shortOption] : @"  ";
 		NSString *longOption = [NSString stringWithFormat:@"--%@", definition.longOption];
 		NSString *description = definition.description ? definition.description : @"";
-		NSUInteger requirements = [self requirements:definition];
+		//NSUInteger requirements = [self requirements:definition];
 		
 		// Prepare option type and update longest option+type string size for better alignment later on.
 		NSString *type = @"";
