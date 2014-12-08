@@ -257,11 +257,17 @@ int main(int argc, char * argv[]) {
                 break;
                 
             case GBParseFlagOption:
-                argument = [argumentAliases objectForKey:argument];
-                if([cliArguments indexOfObject:argument] == NSNotFound) {
-                    [simulation setValue:value forKey:argument];
+                if([argument hasPrefix:@"no-"]) {
+                    argument = [argument stringByReplacingOccurrencesOfString:@"no-" withString:@""];
                 }
-                [settings setObject:value forKey:argument];
+                
+                argument = [argumentAliases objectForKey:argument];
+                if(argument) {
+                    if([cliArguments indexOfObject:argument] == NSNotFound) {
+                        [simulation setValue:value forKey:argument];
+                    }
+                    [settings setObject:value forKey:argument];
+                }
                 break;
         }
     }];
