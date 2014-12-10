@@ -118,6 +118,11 @@ int main(int argc, char * argv[]) {
                     @"type": @"flag",
                     @"long": @"informedWalk",
                     @"desc": @"Enable use of informed walk when searching a previously discovered location"
+                },
+                
+                @{
+                    @"name": @"log",
+                    @"desc": @"Log data to a file.  Supports \"best\", \"average\", \"tags\", \"pheromones\", and \"robots\";  Multiple options may be delimited by commas",
                 }
             ]
         },
@@ -208,7 +213,7 @@ int main(int argc, char * argv[]) {
     ];
     
     // Arguments that are not properties in the Simulation
-    NSArray* cliArguments = @[@"iterations", @"help", @"version", @"gridSize", @"nest"];
+    NSArray* cliArguments = @[@"iterations", @"help", @"version", @"gridSize", @"nest", @"log"];
     
     GBOptionsHelper* helper = [[GBOptionsHelper alloc] init];
     helper.printHelpHeader = ^{ return @"Usage: %APPNAME [options...]"; };
@@ -278,6 +283,7 @@ int main(int argc, char * argv[]) {
                     if([cliArguments indexOfObject:argument] == NSNotFound) {
                         [simulation setValue:value forKey:argument];
                     }
+                    
                     [settings setObject:value forKey:argument];
                 }
                 break;
@@ -310,6 +316,10 @@ int main(int argc, char * argv[]) {
     
     if([settings integerForKey:@"iterations"] > 0) {
         iterations = (int)[settings integerForKey:@"iterations"];
+    }
+    
+    if([settings objectForKey:@"log"]) {
+        [controller setReporters:[[settings objectForKey:@"log"] componentsSeparatedByString:@","]];
     }
     
     [helper printValuesFromSettings:settings];
