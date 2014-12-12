@@ -19,7 +19,8 @@ int main(int argc, char * argv[]) {
     
     // Instantiate controller
     Controller *controller = [[Controller alloc] initWithLogFile:outputFilePath];
-    Simulation *simulation = [controller simulation];
+    Simulation *simulation = [[Simulation alloc] init];
+    [simulation setDelegate:controller];
 
     // Define arguments
     NSArray* arguments = @[
@@ -320,6 +321,9 @@ int main(int argc, char * argv[]) {
     
     if([settings objectForKey:@"log"]) {
         [controller setReporters:[[settings objectForKey:@"log"] componentsSeparatedByString:@","]];
+    }
+    else {
+        [controller setReporters:[@"average,best" componentsSeparatedByString:@","]];
     }
     
     [helper printValuesFromSettings:settings];

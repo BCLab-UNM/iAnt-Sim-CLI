@@ -2,15 +2,57 @@
 
 @implementation Controller
 
-@synthesize simulation, logBestParameters, logMeanParameters, reporters;
+@synthesize reporters;
 
 - (id) initWithLogFile:(NSString*)_logFilePath {
     if (self = [super init]) {
-        simulation = [[Simulation alloc] init];
+        //simulation = [[Simulation alloc] init];
         logFilePath = [_logFilePath stringByExpandingTildeInPath];
         
         reporters = [[NSArray alloc] init];
         reporterActions = @{
+            @"average": @{
+                @"start": ^(Simulation* simulation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/meanParameters.csv"];
+                    [Team writeParameterNamesToFile:filename];
+                },
+                    
+                @"finish": ^(Simulation* simulation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/meanParameters.csv"];
+                    [Utilities appendText:@"\n" toFile:filename];
+                },
+                
+                @"generation": ^(Simulation* simulation, int generation, int evaluation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/meanParameters.csv"];
+                    
+                    Team* team = [simulation averageTeam];
+                    if(team) {
+                        [team writeParametersToFile:filename];
+                    }
+                }
+            },
+        
+            @"best": @{
+                @"start": ^(Simulation* simulation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/bestParameters.csv"];
+                    [Team writeParameterNamesToFile:filename];
+                },
+                
+                @"finish": ^(Simulation* simulation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/bestParameters.csv"];
+                    [Utilities appendText:@"\n" toFile:filename];
+                },
+                
+                @"generation": ^(Simulation* simulation, int generation, int evaluation) {
+                    NSString* filename = [logFilePath stringByAppendingString:@"/evolution/bestParameters.csv"];
+                    
+                    Team* team = [simulation bestTeam];
+                    if(team) {
+                        [team writeParametersToFile:filename];
+                    }
+                }
+            },
+            
             @"tags": @{
                 @"tag": ^(Simulation* simulation, Tag* tag, int tick) {
                     NSString* filename = [logFilePath stringByAppendingString:@"/tags.csv"];
@@ -27,8 +69,6 @@
                 }
             }
         };
-        
-        [simulation setDelegate:self];
     }
     return self;
 }
@@ -48,14 +88,6 @@
     if(![fileManager createDirectoryAtPath:[logFilePath stringByAppendingString:@"/evaluation"] withIntermediateDirectories:YES attributes:nil error:NULL]){
         NSLog(@"Error: Create folder failed %@", [logFilePath stringByAppendingString:@"/evaluation"]);
     }
-    
-    //Create the file names for the best parameters and mean parameters files.
-    logBestParameters = [NSString stringWithFormat:@"%@/evolution/bestParameters.csv", logFilePath];
-    logMeanParameters = [NSString stringWithFormat:@"%@/evolution/meanParameters.csv", logFilePath];
-    
-    //Initialize log file with appropriate column headings
-    [Team writeParameterNamesToFile:logBestParameters];
-    [Team writeParameterNamesToFile:logMeanParameters];
 }
 
 -(void) simulationDidStart:(Simulation*)_simulation {
@@ -76,9 +108,6 @@
             block(_simulation);
         }
     }
-
-    [Utilities appendText:@"\n" toFile:logBestParameters];
-    [Utilities appendText:@"\n" toFile:logMeanParameters];
 }
 
 -(void) simulation:(Simulation*)_simulation didFinishGeneration:(int)generation atEvaluation:(int)evaluation {
@@ -88,20 +117,6 @@
             void (^ block)(Simulation*, int) = reporterActions[reporter][action];
             block(_simulation, generation);
         }
-    }
-
-    Team *team;
-    
-    //Write best parameters to file using comma-delimited format
-    team = [simulation bestTeam];
-    if (team) {
-        [team writeParametersToFile:logBestParameters];
-    }
-    
-    //Write averaged parameters to file using comma-delimited format
-    team = [simulation averageTeam];
-    if (team) {
-        [team writeParametersToFile:logMeanParameters];
     }
 }
 
