@@ -53,6 +53,11 @@ int main(int argc, char * argv[]) {
                 },
                 
                 @{
+                    @"name": @"postEvaluations",
+                    @"desc": @"Number of evaluations to run on averaged colony parameters after evolution"
+                },
+                
+                @{
                     @"name": @"teamCount",
                     @"flag": @'p',
                     @"long": @"teams",
