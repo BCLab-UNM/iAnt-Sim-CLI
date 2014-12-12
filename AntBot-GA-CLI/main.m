@@ -188,6 +188,12 @@ int main(int argc, char * argv[]) {
                     @"name": @"elitism",
                     @"desc": @"Enable elitism",
                     @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"evolution",
+                    @"desc": @"Enable or disable all evolution; alias for \"-i 1 -g 0 -p 1\"",
+                    @"type": @"flag"
                 }
             ]
         },
@@ -213,7 +219,7 @@ int main(int argc, char * argv[]) {
     ];
     
     // Arguments that are not properties in the Simulation
-    NSArray* cliArguments = @[@"iterations", @"help", @"version", @"gridSize", @"nest"];
+    NSArray* cliArguments = @[@"iterations", @"help", @"version", @"gridSize", @"nest", @"evolution"];
     
     GBOptionsHelper* helper = [[GBOptionsHelper alloc] init];
     helper.printHelpHeader = ^{ return @"Usage: %APPNAME [options...]"; };
@@ -311,6 +317,12 @@ int main(int argc, char * argv[]) {
         int x = floor([simulation gridSize].width / 2);
         int y = floor([simulation gridSize].height / 2);
         [simulation setNest:NSMakePoint(x, y)];
+    }
+    
+    if([settings objectForKey:@"evolution"] != nil && [settings boolForKey:@"evolution"] == NO) {
+        [simulation setGenerationCount:0];
+        [simulation setTeamCount:1];
+        iterations = 1;
     }
     
     if([settings integerForKey:@"iterations"] > 0) {
