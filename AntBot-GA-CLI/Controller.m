@@ -58,14 +58,6 @@
                     NSString* text = [NSString stringWithFormat:@"%d,%d,%d\n", tick, (int)tag.position.x, (int)tag.position.y];
                     [Utilities appendText:text toFile:filename];
                 }
-            },
-            
-            @"pheromones": @{
-                @"pheromone": ^(Simulation* simulation, Pheromone* pheromone, int tick) {
-                    NSString* filename = [logFilePath stringByAppendingString:@"/pheromones.csv"];
-                    NSString* text = [NSString stringWithFormat:@"%d,%d,%d\n", tick, (int)pheromone.position.x, (int)pheromone.position.y];
-                    [Utilities appendText:text toFile:filename];
-                }
             }
         };
     }
