@@ -1,289 +1,351 @@
 #define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 #import <Foundation/Foundation.h>
+#import "GBCli.h"
 #import "Controller.h"
 
-int main(int argc, const char * argv[]) {
-    //Input file path
+int main(int argc, char * argv[]) {
+    
+    // Input file path
     NSString *inputFilePath = [@"~/Desktop" stringByExpandingTildeInPath];
     
-    //Output file path
+    // Output file path
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy_MM_dd_E/HH_mm_ss"];
     NSString *outputFilePath = [NSString stringWithFormat:@"%@/iAntSimulation/%@", inputFilePath, [dateFormatter stringFromDate:[NSDate date]]];
     
-    //Number of simulation iterations
+    // Number of simulation iterations
     int iterations = 10;
     
-    //Instantiate controller
+    // Instantiate controller
     Controller *controller = [[Controller alloc] initWithLogFile:outputFilePath];
-    Simulation *simulation = [controller simulation];
-    
-    //Read arguments from the command line as an array
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    if (args && ([args count] > 1)){
-        //Check if the user is requesting help.
-        if((int)[args indexOfObject:[NSString stringWithFormat:@"-h"]] != -1 || (int)[args indexOfObject:[NSString stringWithFormat:@"-help"]] != -1){
-            NSLog(@"%@",
-                  [NSString stringWithFormat:@"Optional command line flags with their default values are as follows:\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%d%@\n%@%@%@\n%@%d%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%f%@\n%@%d%@\n%@%d%@\n%@\n%@\n\n",
-                   @"-iters ",
-                   iterations,
-                   @"   //Sets the number of iterations to run.",
-                   @"-genLimit ",
-                   [simulation generationCount],
-                   @"   //Sets the generationCount, the limit on the number of generations. Set to -1 to ignore and use evaluationLimit instead.",
-                   @"-evalLimit ",
-                   [simulation evaluationLimit],
-                   @"   //Sets the evaluationLimit, the limit on the number of generations. Set to -1 to ignore and use generationCount instead.",
-                   @"-evalCount ",
-                   [simulation evaluationCount],
-                   @"   //Sets evaluationCount, the number of evaluations per individual.",
-                   @"-popSize ",
-                   [simulation teamCount],
-                   @"   //Sets the teamCount, aka population size.",
-                   @"-teamSize ",
-                   [simulation robotCount],
-                   @"   //Sets the robotCount, aka team size.",
-                   @"-tagCount ",
-                   [simulation tagCount],
-                   @"   //Sets tagCount, the number of tags distributed on the grid.",
-                   @"-tickCount ",
-                   [simulation tickCount],
-                   @"   //Set the tickCount, the total amount of time that teams are allowed to search.",
-                   @"-tagCutoff ",
-                   [simulation clusteringTagCutoff],
-                   @"   //Set the clusteringTagCutoff, the number of tags that must be discovered before EM is applied to reduce the random exploration region size.",
-                   @"-gridSize ",
-                   NSStringFromSize([simulation gridSize]),
-                   @"   //Sets dimensions of grid {width, length}",
-                   @"-pileNumber ",
-                   [simulation numberOfClusteredPiles],
-                   @"   //Sets the number of piles for clustered distribution",
-                   @"-distribCluster ",
-                   [simulation distributionClustered],
-                   @"   //Sets the distributionClustered.",
-                   @"-distribPowerLaw ",
-                   [simulation distributionPowerlaw],
-                   @"   //Sets the distributionPowerLaw.",
-                   @"-distribRandom ",
-                   [simulation distributionRandom],
-                   @"   //Sets the distributionRandom.",
-                   @"-crossRate ",
-                   [simulation crossoverRate],
-                   @"   //Sets the crossover rate.",
-                   @"-mutRate ",
-                   [simulation mutationRate],
-                   @"   //Sets the mutation rate.",
-                   @"-mutOp ",
-                   [simulation mutationOperator],
-                   @"   //Sets the mutation operator.\n      //Mutation operator options include:\n      //0 for value-dependent variance mutation\n      //1 for decreasing variance mutation\n      //2 for fixed variance mutation",
-                   @"-crossOp ",
-                   [simulation crossoverOperator],
-                   @"   //Sets the crossover operator.\n      //Crossover operator options include:\n      //0 for independent assortment\n      //1 for uniform crossover\n      //2 for one point crossover\n      //3 for two point crossover",
-                   @"-noElitism   //Turns off elitism. Elitism is enabled by default.",
-                   @"-noError   //Turns off real world error. Real world error is enabled by default."]);
-            exit(0);
-        }
-        //Set iterations
-        NSString *flag = @"-iters";
-        int index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            iterations = [[args objectAtIndex:(index+1)] intValue];
-        }
-        //Set generationCount aka generationLimit
-        flag = @"-genLimit";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setGenerationCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set evaluationLimit
-        flag = @"-evalLimit";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setEvaluationLimit:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set evaluationCount. This is the number of evaluations per individual.
-        flag = @"-evalCount";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setEvaluationCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set teamCount aka population size.
-        flag = @"-popSize";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setTeamCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set robotCount aka team size
-        flag = @"-teamSize";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setRobotCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set tagCount
-        flag = @"-tagCount";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setTagCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set tickCount
-        flag = @"-tickCount";
-        index = (int)[args indexOfObject:flag];
-        if (index != -1){
-            [simulation setTickCount:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set exploredCutoff
-        flag = @"-tagCutoff";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setClusteringTagCutoff:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set gridSize and nest location
-        flag = @"-gridSize";
-        index = (int)[args indexOfObject:flag];
-        if (index != -1){
-            [simulation setGridSize:NSMakeSize([[args objectAtIndex:(index+1)] intValue],[[args objectAtIndex:(index+2)] intValue])];
-            [simulation setNest:NSMakePoint(floor([simulation gridSize].width/2.),floor([simulation gridSize].height/2.))];
-        }
-        //Set numberOfClusteredPiles
-        flag = @"-pileNumber";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setNumberOfClusteredPiles:[[args objectAtIndex:(index+1)] intValue]];
-        }
-        //Set distributionClustered
-        flag = @"-distribCluster";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setDistributionClustered:[[args objectAtIndex:(index+1)] floatValue]];
-        }
-        //Set distributionPowerlaw
-        flag = @"-distribPowerLaw";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setDistributionPowerlaw:[[args objectAtIndex:(index+1)] floatValue]];
-        }
-        //Set distributionRandom
-        flag = @"-distribRandom";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setDistributionRandom:[[args objectAtIndex:(index+1)] floatValue]];
-        }
-        //Set crossoverRate
-        flag = @"-crossRate";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setCrossoverRate:[[args objectAtIndex:(index+1)] floatValue]];
-        }
-        //Set mutationRate
-        flag = @"-mutRate";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setMutationRate:[[args objectAtIndex:(index+1)] floatValue]];
-        }
-        //Set mutation operator
-        flag = @"-mutOp";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
-            switch ([[args objectAtIndex:(index+1)] intValue]){
-                case ValueDependentVarMutId:
-                    [simulation setMutationOperator:ValueDependentVarMutId];
-                    break;
-                case DecreasingVarMutId:
-                    [simulation setMutationOperator:DecreasingVarMutId];
-                    break;
-                case FixedVarMutId:
-                    [simulation setMutationOperator:FixedVarMutId];
-                    break;
-                default:
-                    NSLog(@"%@ is not a valid mutation operator. See help using -h for more information.", [[args objectAtIndex:(index+1)] stringValue]);
-                    exit(1);
-            }
-        }
-        //Set crossover operator
-        flag = @"-crossOp";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            //This case statement is not strictly needed, but I want to use it for error checking and giving feedback to the user. See the default case.
-            switch ([[args objectAtIndex:(index+1)] intValue]){
-                case IndependentAssortmentCrossId:
-                    [simulation setCrossoverOperator:IndependentAssortmentCrossId];
-                    break;
-                case UniformPointCrossId:
-                    [simulation setCrossoverOperator:UniformPointCrossId];
-                    break;
-                case OnePointCrossId:
-                    [simulation setCrossoverOperator:OnePointCrossId];
-                    break;
-                case TwoPointCross:
-                    [simulation setCrossoverOperator:TwoPointCross];
-                    break;
-                default:
-                    NSLog(@"%@ is not a valid crossover operator. See help using -h for more information.", [[args objectAtIndex:(index+1)] stringValue]);
-                    exit(1);
-            }
-        }
-        //Turn off elitism. Elitism is enabled by default.
-        flag = @"-noElitism";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setElitism:NO];
-        }
-        //Turn off error. Error is enabled by default.
-        flag = @"-noError";
-        index = (int)[args indexOfObject:flag];
-        if(index != -1){
-            [simulation setObservedError:NO];
-        }
+    Simulation *simulation = [[Simulation alloc] init];
+    [simulation setDelegate:controller];
+
+    // Define arguments
+    NSArray* arguments = @[
+        @{
+            @"header": @"Experiment Options",
+            @"options": @[
+                @{
+                    @"name": @"iterations",
+                    @"flag": @'i',
+                    @"desc": @"Number of iterations"
+                },
+                
+                @{
+                    @"name": @"generationCount",
+                    @"flag": @'g',
+                    @"long": @"generations",
+                    @"desc": @"Number of generations, or -1 to use evaluationLimit"
+                },
+                
+                @{
+                    @"name": @"evaluationLimit",
+                    @"flag": @'l',
+                    @"desc": @"Number of generations, or -1 to use generationCount"
+                },
+                
+                @{
+                    @"name": @"evaluationCount",
+                    @"flag": @'e',
+                    @"long": @"evaluations",
+                    @"desc": @"Number of evaluations per individual"
+                },
+                
+                @{
+                    @"name": @"postEvaluations",
+                    @"desc": @"Number of evaluations to run on averaged colony parameters after evolution"
+                },
+                
+                @{
+                    @"name": @"teamCount",
+                    @"flag": @'p',
+                    @"long": @"teams",
+                    @"desc": @"Number of teams (population size)"
+                },
+                
+                @{
+                    @"name": @"robotCount",
+                    @"flag": @'r',
+                    @"long": @"robots",
+                    @"desc": @"Number of robots per team"
+                },
+                
+                @{
+                    @"name": @"tickCount",
+                    @"flag": @'t',
+                    @"long": @"ticks",
+                    @"desc": @"Number of ticks per evaluation; one tick equals half a second"
+                },
+                
+                @{
+                    @"name": @"observedError",
+                    @"type": @"flag",
+                    @"long": @"error",
+                    @"desc": @"Enable real-world error"
+                },
+                
+                @{
+                    @"name": @"clusteringTagCutoff",
+                    @"desc": @"Number of tags that must be discovered before EM is applied to reduce the random exploration region size"
+                },
+                
+                @{
+                    @"name": @"useTravel",
+                    @"type": @"flag",
+                    @"long": @"travel",
+                    @"desc": @"Enable travel behavior"
+                },
+                
+                @{
+                    @"name": @"useGiveUp",
+                    @"type": @"flag",
+                    @"long": @"giveUp",
+                    @"desc": @"Enable give up behavior during search"
+                },
+                
+                @{
+                    @"name": @"useSiteFidelity",
+                    @"type": @"flag",
+                    @"long": @"siteFidelity",
+                    @"desc": @"Enable site fidelity behavior"
+                },
+                
+                @{
+                    @"name": @"usePheromone",
+                    @"type": @"flag",
+                    @"long": @"pheromone",
+                    @"desc": @"Enable pheromone-following behavior"
+                },
+                
+                @{
+                    @"name": @"useInformedWalk",
+                    @"type": @"flag",
+                    @"long": @"informedWalk",
+                    @"desc": @"Enable use of informed walk when searching a previously discovered location"
+                },
+                
+                @{
+                    @"name": @"log",
+                    @"desc": @"Log data to a file.  Supports \"best\", \"average\", \"tags\", \"pheromones\", and \"robots\";  Multiple options may be delimited by commas",
+                }
+            ]
+        },
         
-    }
-    //print out the parameters to the console.
-    NSLog(@"%@",
-          [NSString stringWithFormat:@"%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%d\n%@%@\n%@%@\n%@%d\n%@%f\n%@%f\n%@%f\n%@%f\n%@%f\n%@%d\n%@%d\n%@%d\n%@%d\n",
-           @"iterations = ",
-           iterations,
-           @"generationCount aka generation limit = ",
-           [simulation generationCount],
-           @"evaluationLimit = ",
-           [simulation evaluationLimit],
-           @"evaluationCount = ",
-           [simulation evaluationCount],
-           @"teamCount aka population size = ",
-           [simulation teamCount],
-           @"robotCount aka team size = ",
-           [simulation robotCount],
-           @"tagCount = ",
-           [simulation tagCount],
-           @"tickCount = ",
-           [simulation tickCount],
-           @"tagCutoff = ",
-           [simulation clusteringTagCutoff],
-           @"gridSize = ",
-           NSStringFromSize([simulation gridSize]),
-           @"nest = ",
-           NSStringFromPoint([simulation nest]),
-           @"numberOfClusteredPiles = ",
-           [simulation numberOfClusteredPiles],
-           @"distributionClustered = ",
-           [simulation distributionClustered],
-           @"distributionPowerlaw = ",
-           [simulation distributionPowerlaw],
-           @"distributionRandom = ",
-           [simulation distributionRandom],
-           @"crossoverRate = ",
-           [simulation crossoverRate],
-           @"mutationRate = ",
-           [simulation mutationRate],
-           @"mutationOperator = ",
-           [simulation mutationOperator],
-           @"crossoverOperator = ",
-           [simulation crossoverOperator],
-           @"elitism = ",
-           [simulation elitism],
-           @"error = ",
-           [simulation observedError]]);
+        @{
+            @"header": @"Environment Options",
+            @"options": @[
+                @{
+                    @"name": @"tagCount",
+                    @"flag": @'T',
+                    @"long": @"tags",
+                    @"desc": @"Number of tags distributed on the grid"
+                },
+                
+                @{
+                    @"name": @"numberOfClusteredPiles",
+                    @"flag": @'P',
+                    @"long": @"piles",
+                    @"desc": @"Number of piles tags are distributed into"
+                },
+                
+                @{
+                    @"name": @"gridSize",
+                    @"flag": @'s',
+                    @"long": @"size",
+                    @"desc": @"Size of the grid formatted as \"{width, height}\" (including quotation marks)"
+                },
+                
+                @{
+                    @"name": @"nest",
+                    @"flag": @'n',
+                    @"desc": @"Location of the nest on the grid formatted as \"{x, y}\" (including quotation marks)"
+                }
+            ]
+        },
+        
+        @{
+            @"header": @"Genetic Algorithm Options",
+            @"options": @[
+                @{
+                    @"name": @"crossoverRate",
+                    @"flag": @'c'
+                },
+                
+                @{
+                    @"name": @"mutationRate",
+                    @"flag": @'m'
+                },
+                
+                @{
+                    @"name": @"crossoverOperator",
+                    @"flag": @'C',
+                    @"desc": @"0 for independent assortment, 1 for uniform crossover, 2 for one point crossover, 3 for two point crossover",
+                },
+                
+                @{
+                    @"name": @"mutationOperator",
+                    @"flag": @'M',
+                    @"desc": @"0 for value-dependent variance mutation, 1 for decreasing variance mutation, 2 for fixed variance mutation"
+                },
+                
+                @{
+                    @"name": @"elitism",
+                    @"desc": @"Enable elitism",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"evolution",
+                    @"desc": @"Enable or disable all evolution; alias for \"-i 1 -g 0 -p 1\"",
+                    @"type": @"flag"
+                }
+            ]
+        },
+        
+        @{
+            @"header": @"Other Options",
+            @"options": @[
+                @{
+                    @"name": @"help",
+                    @"flag": @'h',
+                    @"desc": @"Print this",
+                    @"type": @"flag"
+                },
+                
+                @{
+                    @"name": @"version",
+                    @"flag": @'v',
+                    @"desc": @"Show version information",
+                    @"type": @"flag"
+                }
+            ]
+        }
+    ];
     
+    // Arguments that are not properties in the Simulation
+    NSArray* cliArguments = @[@"iterations", @"help", @"version", @"gridSize", @"nest", @"log", @"evolution"];
+    
+    GBOptionsHelper* helper = [[GBOptionsHelper alloc] init];
+    helper.printHelpHeader = ^{ return @"Usage: %APPNAME [options...]"; };
+    helper.printHelpFooter = ^{ return @"\nPart of the iAnt Project.  See https://github.com/BCLab-UNM for more information."; };
+    helper.applicationVersion = ^{ return @"1.0"; };
+    
+    // Set up arguments
+    NSDictionary* parameters = [simulation getParameters];
+    GBSettings* defaults = [GBSettings settingsWithName:@"Default" parent: nil];
+    [defaults setInteger:iterations forKey:@"iterations"];
+    
+    GBSettings* settings = [GBSettings settingsWithName:@"Input" parent:defaults];
+    NSMutableDictionary* argumentAliases = [[NSMutableDictionary alloc] init]; // Convert between argument names and Simulation properties.
+    for(NSDictionary* group in arguments) {
+        [helper registerSeparator:group[@"header"]];
+        
+        NSArray* options = group[@"options"];
+        for(NSDictionary* option in options) {
+            char shortName = [option[@"flag"] charValue];
+            shortName = shortName ? shortName : 0;
+            
+            NSString* longName = option[@"long"];
+            longName = longName ? longName : option[@"name"];
+            [argumentAliases setObject:option[@"name"] forKey:longName];
+            
+            GBOptionFlags flag = GBOptionOptionalValue;
+            if([option[@"type"] isEqualToString:@"flag"]) {
+                flag = GBOptionNoValue;
+            }
+            else if([option[@"type"] isEqualToString:@"required"]) {
+                flag = GBOptionRequiredValue;
+            }
+            
+            if([group[@"header"] isEqualToString:@"Other Options"]) {
+                flag |= GBOptionNoPrint;
+            }
+            
+            [helper registerOption:shortName long:longName description:option[@"desc"] flags:flag];
+            
+            if([parameters objectForKey:option[@"name"]]) {
+                [defaults setObject:[parameters objectForKey:option[@"name"]] forKey:longName];
+            }
+        }
+    }
+    
+    // Parse arguments
+    GBCommandLineParser* parser = [[GBCommandLineParser alloc] init];
+    [parser registerSettings:settings];
+    [parser registerOptions:helper];
+    [parser parseOptionsWithArguments:argv count:argc block:^(GBParseFlags flags, NSString* argument, id value, BOOL* stop) {
+        switch(flags) {
+            case GBParseFlagMissingValue:
+                NSLog(@"Missing value for option %@", argument);
+                break;
+                
+            case GBParseFlagUnknownOption:
+                NSLog(@"Unknown option %@", argument);
+                break;
+                
+            case GBParseFlagOption:
+                if([argument hasPrefix:@"no-"]) {
+                    argument = [argument stringByReplacingOccurrencesOfString:@"no-" withString:@""];
+                }
+                
+                argument = [argumentAliases objectForKey:argument];
+                if(argument) {
+                    if([cliArguments indexOfObject:argument] == NSNotFound) {
+                        [simulation setValue:value forKey:argument];
+                    }
+                    
+                    [settings setObject:value forKey:argument];
+                }
+                break;
+        }
+    }];
+    
+    // Help and version checks
+    if([settings boolForKey:@"help"] == YES) {
+        [helper printHelpFromSettings:defaults];
+        return 0;
+    }
+    else if([settings boolForKey:@"version"] == YES) {
+        [helper printVersion];
+        return 0;
+    }
+    
+    // Special cases
+    if([settings objectForKey:@"gridSize"]) {
+        [simulation setGridSize:NSSizeFromString([settings objectForKey:@"gridSize"])];
+    }
+    
+    if([settings objectForKey:@"nest"]) {
+        [simulation setNest:NSPointFromString([settings objectForKey:@"nest"])];
+    }
+    else if([settings objectForKey:@"gridSize"]) {
+        int x = floor([simulation gridSize].width / 2);
+        int y = floor([simulation gridSize].height / 2);
+        [simulation setNest:NSMakePoint(x, y)];
+    }
+    
+    if([settings objectForKey:@"evolution"] != nil && [settings boolForKey:@"evolution"] == NO) {
+        [simulation setGenerationCount:0];
+        [simulation setTeamCount:1];
+        iterations = 1;
+    }
+    
+    if([settings integerForKey:@"iterations"] > 0) {
+        iterations = (int)[settings integerForKey:@"iterations"];
+    }
+    
+    if([settings objectForKey:@"log"]) {
+        [controller setReporters:[[settings objectForKey:@"log"] componentsSeparatedByString:@","]];
+    }
+    else {
+        [controller setReporters:[@"average,best" componentsSeparatedByString:@","]];
+    }
+    
+    [helper printValuesFromSettings:settings];
+    
+    // User-specified evolved parameters
     NSString *parameterFilePath = [NSString stringWithFormat:@"%@/evolvedParameters.plist",inputFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:parameterFilePath]) {
         [simulation setParameterFile:parameterFilePath];
@@ -291,55 +353,55 @@ int main(int argc, const char * argv[]) {
 
     [controller start];
     
-    //Write initialization parameters to file
-    [[simulation getParameters] writeToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"] atomically:YES];
+    // Write initialization parameters to file
+    [simulation writeParametersToFile:[outputFilePath stringByAppendingString:@"/simulationParameters.plist"]];
     
-    //Run for NUM_ITERATIONS and find best overall team
+    // Run iterations and find best overall team
     NSNumber* mostTags = @(0.);
     Team* bestTeam = [[Team alloc] init];
     NSMutableArray* bestTagsCollected;
     NSMutableArray* bestTimeToCompleteCollection;
     
-    for (int i=0; i<iterations; i++) {
+    for(int i = 0; i < iterations; i++) {
         
-        printf("Starting iteration %d\n",i);
+        printf("Starting iteration %d\n", i);
         
-        //Run sim
+        // Run sim
         NSMutableDictionary* data = [simulation run];
         NSMutableArray* tagsCollected = data[@"fitness"];
         NSMutableArray* timeToCompleteCollection = data[@"time"];
         
-        //Record parameters of best performing team
+        // Record parameters of best performing team
         NSNumber* totalTagsCollected = [tagsCollected valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
-        if ([totalTagsCollected compare:mostTags] == NSOrderedDescending) {
+        if([totalTagsCollected compare:mostTags] == NSOrderedDescending) {
             mostTags = totalTagsCollected;
             bestTeam = [simulation averageTeam];
             bestTagsCollected = tagsCollected;
             bestTimeToCompleteCollection = timeToCompleteCollection;
         }
         
-        //Write (averaged) parameters to file for later use
+        // Write (averaged) parameters to file for later use
         NSMutableDictionary* meanParamters = [[simulation averageTeam] getParameters];
         [meanParamters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
         
-        //Write tags collected array to file for analysis
+        // Write tags collected array to file for analysis
         NSString* allTags = [tagsCollected componentsJoinedByString:@"\n"];
         [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
         
-        //Write time to complete collection array to file for analysis
+        // Write time to complete collection array to file for analysis
         NSString* allTime = [timeToCompleteCollection componentsJoinedByString:@"\n"];
         [allTime writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/timeToCompleteCollection%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     }
     
-    //Write best parameters to file for later use
+    // Write best parameters to file for later use
     NSMutableDictionary* bestParameters = [bestTeam getParameters];
     [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestEvolvedParameters.plist"] atomically:YES];
     
-    //Write best tags collected array to file for analysis
+    // Write best tags collected array to file for analysis
     NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
     [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
-    //Write best time to complete collection array to file for analysis
+    // Write best time to complete collection array to file for analysis
     NSString* allTime = [bestTimeToCompleteCollection componentsJoinedByString:@"\n"];
     [allTime writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTimeToCompleteCollection.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
