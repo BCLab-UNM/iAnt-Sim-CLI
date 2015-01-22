@@ -326,14 +326,14 @@ int main(int argc, char * argv[]) {
         [simulation setNest:NSMakePoint(x, y)];
     }
     
+    if([settings integerForKey:@"iterations"] > 0) {
+        iterations = (int)[settings integerForKey:@"iterations"];
+    }
+    
     if([settings objectForKey:@"evolution"] != nil && [settings boolForKey:@"evolution"] == NO) {
         [simulation setGenerationCount:0];
         [simulation setTeamCount:1];
         iterations = 1;
-    }
-    
-    if([settings integerForKey:@"iterations"] > 0) {
-        iterations = (int)[settings integerForKey:@"iterations"];
     }
     
     if([settings objectForKey:@"log"]) {
