@@ -405,11 +405,5 @@ int main(int argc, char * argv[]) {
     NSString* allTime = [bestTimeToCompleteCollection componentsJoinedByString:@"\n"];
     [allTime writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTimeToCompleteCollection.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
     
-    NSString* averageCosts = [[simulation averageCosts] componentsJoinedByString:@","];
-    [averageCosts writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/averageCosts.csv"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
-    
-    NSString* costs = [[simulation costValues] componentsJoinedByString:@","];
-    [costs writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/allCosts.csv"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
-    
     return 0;
 }
