@@ -55,7 +55,7 @@
             @"tags": @{
                 @"tag": ^(Simulation* simulation, Tag* tag, int tick) {
                     NSString* filename = [logFilePath stringByAppendingString:@"/tags.csv"];
-                    NSString* text = [NSString stringWithFormat:@"%d,%d,%d\n", tick, (int)tag.position.x, (int)tag.position.y];
+                    NSString* text = [NSString stringWithFormat:@"%d,%d,%d,%d\n", tick, (int)tag.position.x, (int)tag.position.y, tag.cluster];
                     [Utilities appendText:text toFile:filename];
                 }
             },
