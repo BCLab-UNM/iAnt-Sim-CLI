@@ -359,8 +359,7 @@ int main(int argc, char * argv[]) {
     // Run iterations and find best overall team
     NSNumber* mostTags = @(0.);
     Team* bestTeam = [[Team alloc] init];
-    NSMutableArray* bestTagsCollected;
-    NSMutableArray* bestTimeToCompleteCollection;
+    NSMutableDictionary* bestData;
     
     for(int i = 0; i < iterations; i++) {
         
@@ -368,42 +367,63 @@ int main(int argc, char * argv[]) {
         
         // Run sim
         NSMutableDictionary* data = [simulation run];
-        NSMutableArray* tagsCollected = data[@"fitness"];
-        NSMutableArray* timeToCompleteCollection = data[@"time"];
         
         // Record parameters of best performing team
-        NSNumber* totalTagsCollected = [tagsCollected valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
+        NSNumber* totalTagsCollected = [data[@"fitness"] valueForKeyPath:@"@sum.floatValue"]; //sum over tags collected array
         if([totalTagsCollected compare:mostTags] == NSOrderedDescending) {
             mostTags = totalTagsCollected;
             bestTeam = [simulation averageTeam];
-            bestTagsCollected = tagsCollected;
-            bestTimeToCompleteCollection = timeToCompleteCollection;
+            bestData = data;
         }
         
         // Write (averaged) parameters to file for later use
         NSMutableDictionary* meanParamters = [[simulation averageTeam] getParameters];
         [meanParamters writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/evolvedParameters%d.plist", i]] atomically:YES];
         
-        // Write tags collected array to file for analysis
-        NSString* allTags = [tagsCollected componentsJoinedByString:@"\n"];
-        [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        // If tickCount is set to -1, all tags will be collected
+        if ([simulation tickCount] == -1) {
+            // So, write time to complete collection array to file
+            NSString* allTime = [data[@"time"] componentsJoinedByString:@"\n"];
+            [allTime writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/timeToCompleteCollection%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        }
+        // If not, tags will collected until tickCount is reached
+        else {
+            // So, write tags collected array to file
+            NSString* allTags = [data[@"fitness"] componentsJoinedByString:@"\n"];
+            [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/tagsCollected%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        }
         
-        // Write time to complete collection array to file for analysis
-        NSString* allTime = [timeToCompleteCollection componentsJoinedByString:@"\n"];
-        [allTime writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/timeToCompleteCollection%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        // If clustering is enabled (clusteringTagCutoff >= 0)
+        if ([simulation clusteringTagCutoff] >= 0) {
+            // Write tags collected array to file
+            NSString* allTags = [data[@"clusters"] componentsJoinedByString:@"\n"];
+            [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/predictedClusters%d.txt", i]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+        }
     }
     
     // Write best parameters to file for later use
     NSMutableDictionary* bestParameters = [bestTeam getParameters];
     [bestParameters writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestEvolvedParameters.plist"] atomically:YES];
     
-    // Write best tags collected array to file for analysis
-    NSString* allTags = [bestTagsCollected componentsJoinedByString:@"\n"];
-    [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    // If tickCount is set to -1, all tags will be collected
+    if ([simulation tickCount] == -1) {
+        // So, write best time to complete collection array to file
+        NSString* allTime = [bestData[@"time"] componentsJoinedByString:@"\n"];
+        [allTime writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTimeToCompleteCollection.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    }
+    // If not, tags will collected until tickCount is reached
+    else {
+        // So, write best tags collected array to file
+        NSString* allTags = [bestData[@"fitness"] componentsJoinedByString:@"\n"];
+        [allTags writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTagsCollected.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    }
     
-    // Write best time to complete collection array to file for analysis
-    NSString* allTime = [bestTimeToCompleteCollection componentsJoinedByString:@"\n"];
-    [allTime writeToFile:[outputFilePath stringByAppendingString:@"/evaluation/bestTimeToCompleteCollection.txt"] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    // If clustering is enabled (clusteringTagCutoff >= 0)
+    if ([simulation clusteringTagCutoff] >= 0) {
+        // Write best tags collected array to file
+        NSString* allTags = [bestData[@"clusters"] componentsJoinedByString:@"\n"];
+        [allTags writeToFile:[outputFilePath stringByAppendingString:[NSString stringWithFormat:@"/evaluation/bestPredictedClusters.txt"]] atomically:YES encoding:NSASCIIStringEncoding error:NULL];
+    }
     
     return 0;
 }
