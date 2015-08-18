@@ -1,7 +1,7 @@
 #define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 #import <Foundation/Foundation.h>
-#import "GBCli.h"
+#import "GBCli/GBCli.h"
 #import "Controller.h"
 
 int main(int argc, char * argv[]) {

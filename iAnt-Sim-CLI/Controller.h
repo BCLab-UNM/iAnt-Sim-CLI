@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <AntBot-GA/Sim.h>
+#import <iAnt-Sim/Sim.h>
 
 @interface Controller : NSObject {
     NSString* logFilePath;
