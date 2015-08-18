@@ -1,4 +1,4 @@
-AntBot-GA-CLI
+iAnt-Sim-CLI
 =============
 
-Command line interface for AntBot-GA
+Command-line interface wrapper for iAnt-Sim
